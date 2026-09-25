@@ -1,0 +1,1369 @@
+/* ==========================================================================
+   CS2 PANORAMA HUD // TACTICAL TELEMETRY BENCHMARK STYLESHEET
+   Clean, authentic Source 2 tactical interface. Zero generic AI boilerplate.
+   ========================================================================== */
+
+:root {
+  /* Surfaces */
+  --bg-carbon: #0c0e12;
+  --bg-gunmetal: #131820;
+  --bg-surface-elevated: #18202b;
+  --bg-surface-hover: rgba(26, 36, 50, 0.6);
+  
+  /* Borders */
+  --border-tactical: rgba(255, 255, 255, 0.07);
+  --border-focus: rgba(255, 255, 255, 0.16);
+  --border-amber-active: rgba(245, 158, 11, 0.4);
+  
+  /* CS2 Signature Accents */
+  --amber-primary: #e8a338;
+  --amber-bright: #f59e0b;
+  --amber-glow: rgba(232, 163, 56, 0.25);
+  --amber-glow-strong: rgba(245, 158, 11, 0.6);
+  
+  --ct-cyan: #38bdf8;
+  --ct-glow: rgba(56, 189, 248, 0.2);
+  --pulse-green: #10b981;
+  --t-orange: #ea580c;
+  --red-alert: #ef4444;
+
+  /* Typography Colors */
+  --text-pure: #ffffff;
+  --text-primary: #e2e8f0;
+  --text-steel: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Font Families */
+  --font-hud: "Rajdhani", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Consolas, monospace;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-carbon);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  background-image: 
+    radial-gradient(ellipse 90% 45% at 50% -5%, rgba(24, 32, 45, 0.65), transparent 75%),
+    radial-gradient(circle at 50% 40%, rgba(232, 163, 56, 0.015), transparent 60%),
+    radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 32px 32px;
+  background-position: center, center, -1px -1px;
+}
+
+/* Master Shell Container */
+.telemetry-shell {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.75rem 1.25rem 5rem;
+}
+
+/* Typography Utility */
+.font-hud {
+  font-family: var(--font-hud);
+}
+.font-mono {
+  font-family: var(--font-mono);
+}
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+.tracking-wider {
+  letter-spacing: 0.08em;
+}
+.tracking-widest {
+  letter-spacing: 0.14em;
+}
+
+/* ==========================================================================
+   1. TOP TELEMETRY HEADER
+   ========================================================================== */
+.hud-masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-tactical);
+  margin-bottom: 1.75rem;
+}
+
+.masthead-identity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cs2-tactical-badge {
+  background: var(--amber-primary);
+  color: #0c0e12;
+  font-family: var(--font-mono);
+  font-weight: 900;
+  font-size: 1.15rem;
+  letter-spacing: 1.5px;
+  padding: 0.25rem 0.65rem;
+  border-radius: 2px;
+  box-shadow: 0 0 16px var(--amber-glow);
+  display: inline-flex;
+  align-items: center;
+}
+
+.masthead-title-block h1 {
+  font-family: var(--font-hud);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-pure);
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.masthead-title-block p {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--text-steel);
+  text-transform: uppercase;
+  margin-top: 0.2rem;
+}
+
+/* Utility / Status Telemetry Group */
+.masthead-telemetry {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.telemetry-chip {
+  background: var(--bg-gunmetal);
+  border: 1px solid var(--border-tactical);
+  padding: 0.4rem 0.8rem;
+  border-radius: 2px;
+  color: var(--text-steel);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  white-space: nowrap;
+}
+
+.telemetry-chip strong {
+  color: var(--amber-bright);
+  font-weight: 700;
+}
+
+/* Live Pulse Ring */
+.live-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--pulse-green);
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulse-ring 2.2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 7px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* ==========================================================================
+   2. TACTILE SEGMENTED MULTIPLIER SWITCHER (Default: Tier 1 Max Bonus 4.0x)
+   ========================================================================== */
+.multiplier-telemetry-bar {
+  background: var(--bg-gunmetal);
+  border: 1px solid var(--border-tactical);
+  padding: 0.9rem 1.25rem;
+  border-radius: 2px;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  position: relative;
+}
+
+.multiplier-desc-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.multiplier-desc-col .section-tag {
+  font-family: var(--font-hud);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-pure);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.multiplier-desc-col .section-tag::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: var(--amber-primary);
+}
+
+.multiplier-desc-col .sub-hint {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-steel);
+  margin-top: 0.15rem;
+}
+
+/* Tactical Segmented Switch */
+.tactile-segmented-switch {
+  display: flex;
+  background: #090c0f;
+  border: 1px solid var(--border-tactical);
+  border-radius: 2px;
+  padding: 3px;
+  gap: 3px;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.tactile-tab {
+  background: transparent;
+  border: none;
+  font-family: var(--font-hud);
+  font-weight: 700;
+  font-size: 0.84rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-steel);
+  padding: 0.5rem 0.95rem;
+  border-radius: 2px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.tactile-tab:hover {
+  color: var(--text-pure);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.tactile-tab.active {
+  background: var(--amber-primary);
+  color: #0c0e12;
+  font-weight: 800;
+  box-shadow: 0 0 14px var(--amber-glow);
+}
+
+/* ==========================================================================
+   3. SECTION HEADER & TOGGLES
+   ========================================================================== */
+.section-nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.section-headline h2 {
+  font-family: var(--font-hud);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-pure);
+}
+
+.section-headline p {
+  color: var(--text-steel);
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+}
+
+.benchmark-view-toggle {
+  display: flex;
+  background: var(--bg-gunmetal);
+  border: 1px solid var(--border-tactical);
+  border-radius: 2px;
+  padding: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  gap: 2px;
+}
+
+.toggle-segment-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-steel);
+  padding: 0.45rem 0.85rem;
+  cursor: pointer;
+  border-radius: 2px;
+  font-weight: 700;
+  transition: all 0.15s ease;
+}
+
+.toggle-segment-btn:hover {
+  color: #fff;
+}
+
+.toggle-segment-btn.active {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-focus);
+  color: var(--text-pure);
+}
+
+/* ==========================================================================
+   4. TELEMETRY BENCHMARK STACK (Tactical Mode Telemetry Cards)
+   ========================================================================== */
+.benchmark-card-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-bottom: 2.75rem;
+}
+
+/* Interactive Telemetry Card Row */
+.telemetry-row-card {
+  position: relative;
+  background: var(--bg-gunmetal);
+  border: 1px solid var(--border-tactical);
+  padding: 0.95rem 1.25rem;
+  border-radius: 2px;
+  display: grid;
+  grid-template-columns: 46px 200px 105px 110px 115px 145px 1fr;
+  align-items: center;
+  gap: 1.15rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+/* Subtle corner tick markers */
+.telemetry-row-card::before,
+.telemetry-row-card::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  pointer-events: none;
+  border-color: rgba(255, 255, 255, 0.12);
+  border-style: solid;
+  transition: border-color 0.2s ease;
+}
+
+.telemetry-row-card::before {
+  top: -1px;
+  left: -1px;
+  border-width: 1px 0 0 1px;
+}
+
+.telemetry-row-card::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 1px 1px 0;
+}
+
+.telemetry-row-card:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--border-amber-active);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), 0 0 14px rgba(245, 158, 11, 0.05);
+  transform: translateY(-1px);
+}
+
+.telemetry-row-card:hover::before,
+.telemetry-row-card:hover::after {
+  border-color: var(--amber-primary);
+}
+
+/* Rank Badge */
+.t-rank-badge {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--text-steel);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-tactical);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+
+.telemetry-row-card.rank-top .t-rank-badge {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--amber-bright);
+  border-color: rgba(245, 158, 11, 0.35);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+}
+
+/* Mode Identity */
+.t-identity {
+  display: flex;
+  flex-direction: column;
+}
+
+.t-mode-title {
+  font-family: var(--font-hud);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-pure);
+  text-transform: uppercase;
+}
+
+.t-formula-spec {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-steel);
+  margin-top: 0.1rem;
+}
+
+/* Partitioned Mini-Stat Blocks */
+.t-stat-cell {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-mono);
+}
+
+.t-stat-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.t-stat-value {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 0.15rem;
+}
+
+/* Primary Highlight (XP Throughput) */
+.t-throughput-cell {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-mono);
+}
+
+.t-rate-primary {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--amber-bright);
+  line-height: 1.15;
+  text-shadow: 0 0 14px var(--amber-glow);
+}
+
+.t-rate-unit {
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.t-rate-hourly {
+  font-size: 0.68rem;
+  color: var(--text-steel);
+  margin-top: 0.2rem;
+}
+
+/* Progress Gauge with Glowing Leading Edge */
+.t-gauge-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.tactical-gauge-track {
+  height: 6px;
+  background: #080b0f;
+  border: 1px solid var(--border-tactical);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.tactical-gauge-fill {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(232, 163, 56, 0.45), var(--amber-bright));
+  box-shadow: 0 0 8px var(--amber-glow);
+  position: relative;
+  transition: width 0.35s ease;
+}
+
+.tactical-gauge-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3px;
+  height: 100%;
+  background: #fff;
+  box-shadow: 0 0 6px #fff, 0 0 10px var(--amber-bright);
+}
+
+.t-gauge-target {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-steel);
+  text-align: right;
+}
+
+.t-gauge-target strong {
+  color: var(--text-pure);
+}
+
+/* ==========================================================================
+   5. PRECISION COCKPIT CALCULATOR
+   ========================================================================== */
+.tactical-cockpit-panel {
+  position: relative;
+  background: var(--bg-gunmetal);
+  border: 1px solid var(--border-tactical);
+  border-radius: 2px;
+  margin-bottom: 2.75rem;
+  overflow: hidden;
+}
+
+.cockpit-panel-header {
+  background: var(--bg-surface-elevated);
+  border-bottom: 1px solid var(--border-tactical);
+  padding: 0.9rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.cockpit-panel-header h3 {
+  font-family: var(--font-hud);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-pure);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cockpit-panel-body {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1.75rem;
+  padding: 1.35rem;
+}
+
+@media (max-width: 920px) {
+  .cockpit-panel-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mode Selection Bar */
+.cockpit-mode-strip {
+  display: flex;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.35rem;
+  border-bottom: 1px solid var(--border-tactical);
+}
+
+.cockpit-mode-btn {
+  background: #090c0f;
+  border: 1px solid var(--border-tactical);
+  color: var(--text-steel);
+  font-family: var(--font-hud);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.45rem 0.9rem;
+  border-radius: 2px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  text-transform: uppercase;
+}
+
+.cockpit-mode-btn:hover {
+  color: var(--text-pure);
+  border-color: var(--border-focus);
+}
+
+.cockpit-mode-btn.active {
+  background: var(--amber-primary);
+  color: #0c0e12;
+  border-color: var(--amber-primary);
+  font-weight: 800;
+  box-shadow: 0 0 10px var(--amber-glow);
+}
+
+/* Mechanical Steppers & Sliders */
+.mechanical-stepper-cell {
+  margin-bottom: 1.25rem;
+}
+
+.stepper-header-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.stepper-header-row .stepper-title {
+  color: var(--text-steel);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.stepper-header-row .stepper-readout {
+  color: var(--amber-bright);
+  font-weight: 800;
+  font-size: 0.98rem;
+}
+
+.stepper-input-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.tactical-stepper-btn {
+  background: #090c0f;
+  border: 1px solid var(--border-tactical);
+  color: var(--text-pure);
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 800;
+  width: 38px;
+  height: 38px;
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.tactical-stepper-btn:hover {
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-amber-active);
+  color: var(--amber-bright);
+}
+
+.cockpit-slider {
+  flex: 1;
+  height: 6px;
+  background: #080b0f;
+  border: 1px solid var(--border-tactical);
+  outline: none;
+  -webkit-appearance: none;
+  border-radius: 2px;
+}
+
+.cockpit-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--amber-primary);
+  border: 2px solid #080b0f;
+  cursor: pointer;
+  border-radius: 2px;
+  box-shadow: 0 0 10px var(--amber-glow);
+  transition: all 0.15s ease;
+}
+
+.cockpit-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 14px var(--amber-bright);
+}
+
+.cockpit-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--amber-primary);
+  border: 2px solid #080b0f;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.mode-rule-memo {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-steel);
+  margin-top: 0.75rem;
+  line-height: 1.45;
+}
+
+/* Partitioned Cockpit Tile Grid */
+.cockpit-tile-matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+@media (max-width: 550px) {
+  .cockpit-tile-matrix {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cockpit-tile {
+  background: #090c0f;
+  border: 1px solid var(--border-tactical);
+  padding: 1rem 1.15rem;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.cockpit-tile.highlight {
+  border-color: var(--border-amber-active);
+  background: linear-gradient(180deg, #0d1218 0%, rgba(232, 163, 56, 0.06) 100%);
+}
+
+.cockpit-tile-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.cockpit-tile-value {
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-pure);
+  line-height: 1.15;
+  margin-top: 0.25rem;
+}
+
+.cockpit-tile.highlight .cockpit-tile-value {
+  color: var(--amber-bright);
+  text-shadow: 0 0 16px var(--amber-glow);
+}
+
+.cockpit-tile-subtext {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-steel);
+  margin-top: 0.25rem;
+}
+
+/* ==========================================================================
+   6. TECHNICAL SPECIFICATIONS & VERIFIED MATCH PROOFS
+   ========================================================================== */
+.technical-reference-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 850px) {
+  .technical-reference-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tactical-reference-box {
+  background: var(--bg-gunmetal);
+  border: 1px solid var(--border-tactical);
+  padding: 1.25rem;
+  border-radius: 2px;
+}
+
+.tactical-reference-box h3 {
+  font-family: var(--font-hud);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-pure);
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--border-tactical);
+}
+
+.formula-telemetry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.formula-telemetry-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: #090c0f;
+  border: 1px solid var(--border-tactical);
+  border-radius: 2px;
+}
+
+.formula-mode-name {
+  color: var(--text-pure);
+  font-weight: 600;
+}
+
+.formula-math-expr {
+  color: var(--amber-bright);
+  font-weight: 700;
+}
+
+.match-proof-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.proof-row-item {
+  background: #090c0f;
+  border: 1px solid var(--border-tactical);
+  padding: 0.65rem 0.85rem;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.proof-score-tag {
+  font-weight: 700;
+  color: var(--amber-bright);
+}
+
+.proof-detail-meta {
+  color: var(--text-steel);
+}
+
+/* Footer */
+.tactical-footer {
+  margin-top: 3.5rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--border-tactical);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Responsive Table Breakpoints */
+@media (max-width: 1020px) {
+  .telemetry-row-card {
+    grid-template-columns: 40px 160px 95px 95px 100px 130px 1fr;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+  }
+}
+
+@media (max-width: 860px) {
+  .telemetry-row-card {
+    grid-template-columns: 36px 140px 90px 90px 1fr;
+    gap: 0.65rem;
+  }
+  .t-stat-cell:nth-child(5) {
+    display: none; /* Hide match XP on tablet to preserve throughput */
+  }
+  .t-gauge-cell {
+    grid-column: 1 / -1;
+    margin-top: 0.35rem;
+  }
+}
+
+@media (max-width: 620px) {
+  .telemetry-row-card {
+    grid-template-columns: 32px 1fr 110px;
+    gap: 0.5rem;
+  }
+  .t-stat-cell {
+    display: none; /* Mobile focuses on mode name and throughput */
+  }
+  .t-gauge-cell {
+    grid-column: 1 / -1;
+    margin-top: 0.35rem;
+  }
+}
+
+/* ==========================================================================
+   7. NAVIGATION STRIP & SHARE ACTION
+   ========================================================================== */
+.tactical-quick-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  background: var(--bg-gunmetal);
+  border: 1px solid var(--border-tactical);
+  border-radius: 2px;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.quick-nav-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.quick-nav-links a {
+  color: var(--text-steel);
+  text-decoration: none;
+  transition: color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.quick-nav-links a:hover {
+  color: var(--amber-bright);
+}
+
+.share-chip-btn {
+  background: rgba(232, 163, 56, 0.12);
+  border: 1px solid var(--amber-primary);
+  color: var(--amber-bright);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.35rem 0.75rem;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.share-chip-btn:hover {
+  background: var(--amber-primary);
+  color: #0c0e12;
+  box-shadow: 0 0 12px var(--amber-glow);
+}
+
+.tactical-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #18202b;
+  border: 1px solid var(--amber-bright);
+  color: var(--text-pure);
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  z-index: 10000;
+  transform: translateY(100px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tactical-toast.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.tactical-toast svg {
+  color: var(--amber-bright);
+}
+
+/* ==========================================================================
+   8. COMPREHENSIVE GUIDE & EXPLANATION SECTIONS (SEO & USER INTEL)
+   ========================================================================== */
+.tactical-guide-section {
+  margin-top: 3.5rem;
+}
+
+.guide-section-intro {
+  margin-bottom: 1.5rem;
+}
+
+.guide-section-intro h2 {
+  font-family: var(--font-hud);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-pure);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.guide-section-intro p {
+  color: var(--text-steel);
+  font-size: 0.88rem;
+  margin-top: 0.25rem;
+  max-width: 900px;
+  line-height: 1.6;
+}
+
+.guide-article-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .guide-article-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.guide-panel {
+  background: var(--bg-gunmetal);
+  border: 1px solid var(--border-tactical);
+  padding: 1.5rem;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+}
+
+.guide-panel h3 {
+  font-family: var(--font-hud);
+  font-size: 1.18rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-pure);
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-tactical);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.guide-panel p {
+  color: var(--text-primary);
+  font-size: 0.86rem;
+  line-height: 1.65;
+  margin-bottom: 0.85rem;
+}
+
+.guide-highlight-box {
+  background: #090c0f;
+  border: 1px solid var(--border-tactical);
+  border-left: 3px solid var(--amber-primary);
+  padding: 0.85rem 1rem;
+  margin: 0.75rem 0 1rem;
+  border-radius: 2px;
+}
+
+.guide-highlight-box p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-steel);
+}
+
+.guide-highlight-box strong {
+  color: var(--text-pure);
+}
+
+/* Tactical Data Table */
+.tactical-table-wrapper {
+  overflow-x: auto;
+  margin-top: 0.75rem;
+  border: 1px solid var(--border-tactical);
+  border-radius: 2px;
+}
+
+.tactical-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-align: left;
+}
+
+.tactical-data-table th {
+  background: #090c0f;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid var(--border-tactical);
+}
+
+.tactical-data-table td {
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+}
+
+.tactical-data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.tactical-data-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Multiplier Progression Visual Meter */
+.multiplier-meter-card {
+  background: #090c0f;
+  border: 1px solid var(--border-tactical);
+  padding: 1.25rem;
+  border-radius: 2px;
+  margin-top: 1rem;
+}
+
+.multiplier-meter-bar {
+  display: flex;
+  height: 18px;
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 0.85rem 0 0.65rem;
+  background: #18202b;
+}
+
+.meter-segment {
+  height: 100%;
+  position: relative;
+  transition: opacity 0.2s ease;
+}
+
+.meter-segment.seg-tier1 {
+  width: 40.3%; /* 4,500 / 11,166 */
+  background: #10b981;
+}
+
+.meter-segment.seg-tier2 {
+  width: 26.9%; /* 3,000 / 11,166 */
+  background: #38bdf8;
+}
+
+.meter-segment.seg-tier3 {
+  width: 32.8%; /* 3,666 / 11,166 */
+  background: #94a3b8;
+}
+
+.multiplier-meter-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+.meter-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-steel);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Tier Badges */
+.tier-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 2px;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  font-family: var(--font-mono);
+}
+
+.tier-badge.tier-4x {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.tier-badge.tier-2x {
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.tier-badge.tier-1x {
+  background: rgba(148, 163, 184, 0.12);
+  color: #94a3b8;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.tier-badge.tier-pen {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+/* Service Medal Badges Grid */
+.medal-tier-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.65rem;
+  margin-top: 0.75rem;
+}
+
+.medal-tier-card {
+  background: #090c0f;
+  border: 1px solid var(--border-tactical);
+  padding: 0.75rem;
+  border-radius: 2px;
+  text-align: center;
+  font-family: var(--font-mono);
+}
+
+.medal-tier-card .medal-rank {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.medal-tier-card .medal-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin: 0.2rem 0;
+}
+
+.medal-tier-card .medal-xp {
+  font-size: 0.68rem;
+  color: var(--text-steel);
+}
+
+/* ==========================================================================
+   9. INTERACTIVE & CRAWLABLE FAQ ACCORDION
+   ========================================================================== */
+.faq-section {
+  margin-top: 3.5rem;
+}
+
+.faq-card-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.faq-card {
+  background: var(--bg-gunmetal);
+  border: 1px solid var(--border-tactical);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+
+.faq-card:hover {
+  border-color: var(--border-focus);
+}
+
+.faq-card[open] {
+  border-color: var(--border-amber-active);
+  background: linear-gradient(180deg, var(--bg-gunmetal) 0%, rgba(24, 32, 43, 0.8) 100%);
+}
+
+.faq-summary {
+  padding: 1.1rem 1.35rem;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-hud);
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-pure);
+  user-select: none;
+}
+
+.faq-summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-chevron {
+  color: var(--amber-primary);
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.faq-card[open] .faq-chevron {
+  transform: rotate(180deg);
+}
+
+.faq-body {
+  padding: 0 1.35rem 1.25rem 1.35rem;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--text-primary);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  padding-top: 0.85rem;
+}
+
+.faq-body p {
+  margin-bottom: 0.65rem;
+}
+
+.faq-body p:last-child {
+  margin-bottom: 0;
+}
+
+.faq-body code {
+  background: #090c0f;
+  color: var(--amber-bright);
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 2px 6px;
+  border-radius: 2px;
+  border: 1px solid var(--border-tactical);
+}
+

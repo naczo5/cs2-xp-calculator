@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#0c0e12"/>
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="none" stroke="#e8a338" stroke-width="2"/>
+  <rect x="10" y="10" width="44" height="24" rx="5" fill="#e8a338"/>
+  <text x="32" y="27" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="900" fill="#0c0e12" text-anchor="middle" letter-spacing="1">CS2</text>
+  <text x="32" y="50" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="800" fill="#38bdf8" text-anchor="middle" letter-spacing="0.5">XP</text>
+</svg>

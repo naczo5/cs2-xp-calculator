@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://naczo5.github.io/cs2-xp-calculator/sitemap.xml

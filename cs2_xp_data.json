@@ -1,0 +1,214 @@
+{
+  "meta": {
+    "game": "Counter-Strike 2",
+    "updated_at": "2026-09-24",
+    "description": "CS2 XP calculation formulas, multipliers, and time efficiency statistics for all official game modes."
+  },
+  "global_mechanics": {
+    "xp_per_level": 5000,
+    "weekly_reset_day": "Wednesday",
+    "weekly_reset_time_utc": "01:00 UTC",
+    "weekly_care_package_requirement": "Rank up once per week with Prime Status",
+    "must_complete_match": true
+  },
+  "gamemodes": [
+    {
+      "id": "rush",
+      "name": "Rush (3v3)",
+      "calculation_type": "round_based",
+      "formula": "Rounds Won × 10",
+      "multiplier": 10,
+      "metric": "rounds_won",
+      "win_conditions": [
+        "First team to reach a 4-round net lead (Castle capture / tug-of-war completion)",
+        "First team to reach 8 round wins (if no 4-round lead reached in regulation)"
+      ],
+      "max_win_rounds": 8,
+      "min_win_rounds": 4,
+      "base_xp_range": { "min_loss": 0, "min_win": 40, "max_win": 80 },
+      "match_duration_minutes": {
+        "fast_blowout_4_0_to_6_2": { "min": 3.5, "avg": 5.2 },
+        "medium_match_8_4": { "avg": 9.3 },
+        "full_match_8_7": { "max": 11.0 }
+      },
+      "realistic_average_duration_minutes": 7.5,
+      "base_xp_per_minute": {
+        "fast_win_6_2": 11.50,
+        "medium_win_8_4": 8.62,
+        "close_win_8_7": 7.37,
+        "average_win": 9.33,
+        "average_loss_3_rounds": 4.0
+      }
+    },
+    {
+      "id": "premier_competitive",
+      "name": "Premier & Competitive",
+      "calculation_type": "round_based",
+      "formula": "Rounds Won × 30",
+      "multiplier": 30,
+      "metric": "rounds_won",
+      "win_condition": "First to 13 rounds (MR12)",
+      "max_win_rounds": 13,
+      "max_base_xp": 390,
+      "average_match_duration_minutes": 35.0,
+      "base_xp_per_minute": {
+        "loss_0_13": 0.0,
+        "avg_winrate_50pct": 5.57,
+        "win_13_rounds": 11.14
+      }
+    },
+    {
+      "id": "wingman",
+      "name": "Wingman (2v2)",
+      "calculation_type": "round_based",
+      "formula": "Rounds Won × 15",
+      "multiplier": 15,
+      "metric": "rounds_won",
+      "win_condition": "First to 9 rounds (MR8)",
+      "max_win_rounds": 9,
+      "max_base_xp": 135,
+      "average_match_duration_minutes": 12.0,
+      "base_xp_per_minute": {
+        "loss_0_9": 0.0,
+        "avg_winrate_50pct": 5.62,
+        "win_9_rounds": 11.25
+      }
+    },
+    {
+      "id": "casual",
+      "name": "Casual",
+      "calculation_type": "score_based",
+      "formula": "Player Score × 4.0",
+      "multiplier": 4.0,
+      "metric": "player_score",
+      "typical_score_range": { "low": 15, "avg": 40, "high": 75 },
+      "average_match_duration_minutes": 20.0,
+      "base_xp_per_minute": {
+        "low_performance": 3.0,
+        "avg_performance": 8.0,
+        "high_performance": 15.0
+      }
+    },
+    {
+      "id": "deathmatch",
+      "name": "Deathmatch",
+      "calculation_type": "score_based",
+      "formula": "Player Score × 0.2",
+      "multiplier": 0.2,
+      "metric": "player_score",
+      "typical_score_range": { "low": 250, "avg": 500, "high": 800 },
+      "average_match_duration_minutes": 10.0,
+      "base_xp_per_minute": {
+        "low_performance": 5.0,
+        "avg_performance": 10.0,
+        "high_performance": 16.0
+      },
+      "notes": "Valve caps maximum XP gain to hinder XP farming bots."
+    },
+    {
+      "id": "arms_race",
+      "name": "Arms Race",
+      "calculation_type": "score_based",
+      "formula": "Player Score × 1.0",
+      "multiplier": 1.0,
+      "metric": "player_score",
+      "typical_score_range": { "low": 25, "avg": 55, "high": 80 },
+      "average_match_duration_minutes": 8.0,
+      "base_xp_per_minute": {
+        "low_performance": 3.12,
+        "avg_performance": 6.87,
+        "high_performance": 10.0
+      }
+    },
+    {
+      "id": "retakes",
+      "name": "Retakes",
+      "calculation_type": "score_based",
+      "formula": "Player Score × 2.0",
+      "multiplier": 2.0,
+      "metric": "player_score",
+      "typical_score_range": { "low": 15, "avg": 30, "high": 50 },
+      "average_match_duration_minutes": 10.0,
+      "base_xp_per_minute": {
+        "low_performance": 3.0,
+        "avg_performance": 6.0,
+        "high_performance": 10.0
+      }
+    }
+  ],
+  "sample_matches": [
+    {
+      "match_id": 1,
+      "source": "user_screenshot_1",
+      "mode": "Rush | Complex",
+      "duration": "10:51",
+      "duration_minutes": 10.85,
+      "score": { "ct": 8, "t": 7 },
+      "player_team": "CT",
+      "end_reason": "First to 8 rounds (max regulation rounds)",
+      "player_stats": {
+        "kills": 11,
+        "deaths": 8,
+        "assists": 5,
+        "damage": 778,
+        "adr": 51,
+        "hs_percentage": 36
+      },
+      "xp": {
+        "base_earned": 80,
+        "rounds_won": 8,
+        "calculated_base": 80,
+        "formula": "8 * 10 = 80",
+        "xp_per_minute": 7.37
+      }
+    },
+    {
+      "match_id": 2,
+      "source": "user_screenshot_2",
+      "mode": "Rush | Complex",
+      "duration": "9:17",
+      "duration_minutes": 9.28,
+      "score": { "ct": 4, "t": 8 },
+      "player_team": "T",
+      "end_reason": "4-round lead (8-4) AND First to 8 rounds",
+      "player_stats": {
+        "kills": 5,
+        "deaths": 8,
+        "assists": 5,
+        "damage": 812,
+        "hs_percentage": 60
+      },
+      "xp": {
+        "base_earned": 80,
+        "rounds_won": 8,
+        "calculated_base": 80,
+        "formula": "8 * 10 = 80",
+        "xp_per_minute": 8.62
+      }
+    },
+    {
+      "match_id": 3,
+      "source": "user_screenshot_3",
+      "mode": "Rush | Complex",
+      "duration": "5:13",
+      "duration_minutes": 5.22,
+      "score": { "ct": 2, "t": 6 },
+      "player_team": "T",
+      "end_reason": "4-round net lead reached (6-2, Castle captured)",
+      "player_stats": {
+        "kills": 4,
+        "deaths": 2,
+        "assists": 2,
+        "damage": 537,
+        "hs_percentage": 75
+      },
+      "xp": {
+        "base_earned": 60,
+        "rounds_won": 6,
+        "calculated_base": 60,
+        "formula": "6 * 10 = 60",
+        "xp_per_minute": 11.50
+      }
+    }
+  ]
+}

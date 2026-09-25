@@ -1,0 +1,27 @@
+# Operating System Files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Editor & IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary chat drops & crops
+*crop*
+temp_*
+scratch/
+generate_assets.py
+
