@@ -2,7 +2,7 @@
 window.CS2_XP_DATA = {
   meta: {
     game: "Counter-Strike 2",
-    patch: "2026.09 (Rush Hour)",
+    patch: "2026",
     levelRequirement: 5000,
     resetSchedule: "Wednesdays 01:00 UTC"
   },
@@ -108,10 +108,10 @@ window.CS2_XP_DATA = {
       multiplier: 10,
       avgDuration: 7.5,  // Verified across short blowouts (5m) and full games (10m)
       avgMetric: 5.5,    // Average rounds won at 50% winrate
-      winMetric: 6.0,    // Fast 4-round lead castle capture (6-2 in ~5.2 min)
+      winMetric: 6.0,    // Fast 4-round lead win (6-2 in ~5.2 min)
       winDuration: 5.22,
-      winCondition: "4-round lead (Castle capture) OR first to 8 wins",
-      notes: "Fastest round-based burst. Instant win on 4-round lead (e.g. 6-2 in 5m 13s)."
+      winCondition: "4-round lead OR first to 8 wins",
+      notes: "Fastest round-based burst. Instant win on 4-round lead (e.g. 6-2 in ~5 min)."
     },
     {
       id: "casual",

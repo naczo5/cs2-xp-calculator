@@ -7,7 +7,7 @@
   <!-- Primary Search Engine Optimization (SEO) -->
   <title>CS2 XP Calculator & Multiplier Guide | Counter-Strike 2 XP Benchmarks</title>
   <meta name="title" content="CS2 XP Calculator & Multiplier Guide | Counter-Strike 2 XP Benchmarks">
-  <meta name="description" content="Official Counter-Strike 2 XP Calculator & telemetry benchmarks. Calculate XP per match and XP/min for Premier, Competitive, Wingman, Casual & Deathmatch. Includes weekly bonus tiers, reduced XP penalties, and weekly care package reset timer.">
+  <meta name="description" content="Counter-Strike 2 (CS2) XP Calculator & benchmarks. Calculate XP per match and XP/min for Premier, Competitive, Wingman, Casual & Deathmatch. Includes weekly bonus tiers, reduced XP rates, and weekly care package reset timer.">
   <meta name="keywords" content="CS2 XP calculator, how is cs2 xp calculated, cs2 xp formula, counter strike 2 xp, cs2 weekly bonus xp, cs2 reduced xp, cs2 weekly reset, cs2 care package, cs2 service medal, cs2 xp per match, cs2 xp per minute, cs2 premier xp">
   <meta name="author" content="naczo5">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -16,7 +16,7 @@
 
   <!-- Open Graph / Facebook / Discord / WhatsApp / Telegram / LinkedIn -->
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="CS2 XP Calculator & Telemetry">
+  <meta property="og:site_name" content="CS2 XP Calculator">
   <meta property="og:url" content="https://naczo5.github.io/cs2-xp-calculator/">
   <meta property="og:title" content="CS2 XP Calculator & Multiplier Guide | Counter-Strike 2 XP Benchmarks">
   <meta property="og:description" content="Calculate exact CS2 XP per match, XP per minute, weekly bonus multiplier tiers (4x to reduced), and time to your 5,000 XP weekly care package drop.">
@@ -25,7 +25,7 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="CS2 XP Calculator and Game Mode Benchmark Telemetry">
+  <meta property="og:image:alt" content="CS2 XP Calculator and Game Mode Benchmarks">
   <meta property="og:locale" content="en_US">
 
   <!-- Twitter / X -->
@@ -36,7 +36,7 @@
   <meta name="twitter:title" content="CS2 XP Calculator & Multiplier Guide | Counter-Strike 2 XP Benchmarks">
   <meta name="twitter:description" content="Calculate exact CS2 XP per match, XP per minute, weekly bonus multiplier tiers (4x to reduced), and time to your 5,000 XP weekly care package drop.">
   <meta name="twitter:image" content="https://naczo5.github.io/cs2-xp-calculator/og-image.png">
-  <meta name="twitter:image:alt" content="CS2 XP Calculator and Game Mode Benchmark Telemetry">
+  <meta name="twitter:image:alt" content="CS2 XP Calculator and Game Mode Benchmarks">
 
   <!-- Mobile & PWA Icons -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -61,7 +61,7 @@
         "@id": "https://naczo5.github.io/cs2-xp-calculator/#website",
         "url": "https://naczo5.github.io/cs2-xp-calculator/",
         "name": "CS2 XP Calculator & Benchmarks",
-        "description": "Counter-Strike 2 XP calculator, official match formulas, and weekly bonus telemetry.",
+        "description": "Counter-Strike 2 XP calculator, match formulas, and weekly bonus multipliers.",
         "inLanguage": "en-US"
       },
       {
@@ -82,7 +82,7 @@
           "XP per minute and XP per hour throughput benchmarks",
           "Weekly bonus multiplier selector (4x Max, 2x Reduced, 1x Base, 0.175x Reduced XP)",
           "Weekly Care Package (5,000 XP) matches and time estimator",
-          "Verified Source 2 match telemetry proof comparison"
+          "Sample match XP breakdowns and formula verification"
         ],
         "screenshot": "https://naczo5.github.io/cs2-xp-calculator/og-image.png"
       },
@@ -119,7 +119,7 @@
             "name": "What is Reduced XP in CS2 and how do you fix it?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Reduced XP (XP Overload penalty) occurs once a player earns over 11,166 XP within a single reset week. In this state, base XP is multiplied by 0.175 (an 82.5% reduction). Reduced XP cannot be removed manually; it automatically resets on the next weekly reset every Wednesday at 01:00 UTC."
+              "text": "Reduced XP occurs once a player earns over 11,166 XP within a single reset week (which also awards the in-game XP Overload icon). In this state, base XP is multiplied by 0.175 (an 82.5% reduction). Reduced XP cannot be removed manually; it automatically resets on the next weekly reset every Wednesday at 01:00 UTC."
             }
           },
           {
@@ -127,7 +127,7 @@
             "name": "What is the fastest game mode to get XP in CS2?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "For solo play, Deathmatch offers the highest sustained rate (~40.0 XP/min) for proficient fraggers. For fast coordinated teams, Rush 3v3 can surge to 45.98 XP/min when securing fast 4-round lead castle captures. Premier and Competitive provide the largest single-match payouts (up to 1,560 XP on a win with 4x bonus) averaging ~37.1 XP/min."
+              "text": "For solo play, Deathmatch offers the highest sustained rate (~40.0 XP/min) if you score consistently. In Rush 3v3, fast wins with a 4-round lead can yield up to ~46 XP/min. Premier and Competitive provide the largest single-match payouts (up to 1,560 XP on a win with 4x bonus) averaging ~37.1 XP/min."
             }
           },
           {
@@ -209,22 +209,57 @@
       </button>
     </nav>
 
-    <!-- 1. TOP TELEMETRY MASTHEAD -->
+    <!-- 1. TOP HEADER & RESET STATUS -->
     <header class="hud-masthead">
       <div class="masthead-identity">
         <div class="cs2-tactical-badge">CS2</div>
         <div class="masthead-title-block">
-          <h1>XP Telemetry & Match Calculator</h1>
-          <p>Source 2 Match Intelligence &middot; Exact Formulas &middot; Weekly Care Package Drops</p>
+          <h1>CS2 XP & Match Calculator</h1>
+          <p>Exact Match Formulas &middot; Rate Benchmarks &middot; Weekly Care Package Drops</p>
         </div>
       </div>
       <div class="masthead-telemetry">
         <div class="telemetry-chip" title="Weekly Care Package drops require 5,000 XP (1 Profile Rank)">
-          <span class="live-pulse-dot"></span>
           <span>CARE PACKAGE: <strong>5,000 XP</strong></span>
         </div>
-        <div class="telemetry-chip" id="chip-reset-countdown" title="Weekly reset occurs every Wednesday at 01:00 UTC">
-          <span>RESET: <strong id="reset-timer-val">WED 01:00 UTC</strong></span>
+        <div class="telemetry-chip reset-chip-interactive" id="chip-reset-countdown" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" aria-label="CS2 Weekly Reset Time Details">
+          <span class="reset-chip-content">RESET: <strong id="reset-timer-val">WED 01:00 UTC</strong></span>
+          <svg class="chip-info-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+
+          <!-- Hover / Focus Popup for Local & UTC Reset Times -->
+          <div class="reset-hover-popup" id="reset-popup" role="tooltip" aria-hidden="true">
+            <div class="reset-popup-header">
+              <div class="reset-popup-title-row">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--amber-bright)" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                <span class="reset-popup-title">NEXT CS2 RESET</span>
+              </div>
+              <span class="reset-popup-countdown tabular-nums font-mono" id="popup-reset-countdown">In --d --h</span>
+            </div>
+
+            <div class="reset-popup-times">
+              <!-- Local Time Row -->
+              <div class="reset-time-block highlight">
+                <div class="reset-time-meta">
+                  <span class="reset-time-label">YOUR LOCAL TIME</span>
+                  <span class="reset-time-tz font-mono" id="popup-local-tz">Local</span>
+                </div>
+                <div class="reset-time-value" id="popup-local-time">Loading local time...</div>
+              </div>
+
+              <!-- UTC Time Row -->
+              <div class="reset-time-block">
+                <div class="reset-time-meta">
+                  <span class="reset-time-label">VALVE OFFICIAL TIME</span>
+                  <span class="reset-time-tz font-mono">UTC</span>
+                </div>
+                <div class="reset-time-value font-mono" id="popup-utc-time">Wed, 01:00 UTC</div>
+              </div>
+            </div>
+
+            <div class="reset-popup-footer">
+              Resets Weekly Care Package drops &amp; restores the Tier 1 (4.0&times;) XP bonus pool.
+            </div>
+          </div>
         </div>
       </div>
     </header>
@@ -266,7 +301,7 @@
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
           Custom Match XP Calculator
         </h3>
-        <span class="telemetry-chip" id="calc-tier-indicator">Active Tier: <strong>4.0x Speed</strong></span>
+        <span class="telemetry-chip" id="calc-tier-indicator">Active Tier: <strong>Max Weekly Bonus (4.0x)</strong></span>
       </div>
 
       <div class="cockpit-panel-body">
@@ -339,7 +374,7 @@
       </div>
     </section>
 
-    <!-- 5. TECHNICAL SPECIFICATIONS & VERIFIED PROOFS -->
+    <!-- 5. XP FORMULAS & SAMPLE MATCHES -->
     <section class="technical-reference-grid">
       
       <!-- Official Formulas Reference -->
@@ -377,14 +412,14 @@
         </div>
       </div>
 
-      <!-- Live Match Verification Telemetry -->
+      <!-- Sample Match Breakdown -->
       <div class="tactical-reference-box">
-        <h3>Verified Match Proofs (Rush Complex)</h3>
+        <h3>Sample Match Breakdown (Rush)</h3>
         <div class="match-proof-list">
           <div class="proof-row-item">
             <div>
               <span class="proof-score-tag">6 - 2 Win</span>
-              <span style="font-size:0.68rem;color:var(--text-muted);display:block">Instant 4-round lead (Castle capture)</span>
+              <span style="font-size:0.68rem;color:var(--text-muted);display:block">Fast win: 4-round lead (6-2)</span>
             </div>
             <div style="text-align:right" class="tabular-nums">
               <span class="proof-detail-meta">5:13 &middot; 60 Base / 240 Max</span>
@@ -395,7 +430,7 @@
           <div class="proof-row-item">
             <div>
               <span class="proof-score-tag">8 - 4 Win</span>
-              <span style="font-size:0.68rem;color:var(--text-muted);display:block">8 wins + 4-round lead</span>
+              <span style="font-size:0.68rem;color:var(--text-muted);display:block">Win: 4-round lead (8-4)</span>
             </div>
             <div style="text-align:right" class="tabular-nums">
               <span class="proof-detail-meta">9:17 &middot; 80 Base / 320 Max</span>
@@ -406,7 +441,7 @@
           <div class="proof-row-item">
             <div>
               <span class="proof-score-tag">8 - 7 Win</span>
-              <span style="font-size:0.68rem;color:var(--text-muted);display:block">Full 15-round regulation tug-of-war</span>
+              <span style="font-size:0.68rem;color:var(--text-muted);display:block">Close win: 8-7 (Full regulation)</span>
             </div>
             <div style="text-align:right" class="tabular-nums">
               <span class="proof-detail-meta">10:51 &middot; 80 Base / 320 Max</span>
@@ -418,14 +453,14 @@
 
     </section>
 
-    <!-- 6. COMPREHENSIVE GUIDE: HOW CS2 XP IS CALCULATED (SEO DEEP-DIVE) -->
+    <!-- 6. HOW CS2 XP IS CALCULATED -->
     <article class="tactical-guide-section" id="how-xp-works">
       <div class="guide-section-intro">
         <h2>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--amber-bright)" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-          How CS2 XP Is Calculated: Complete Official Guide
+          How CS2 XP Is Calculated: Complete Guide
         </h2>
-        <p>In Counter-Strike 2, experience points (XP) determine your Profile Rank, earn your annual Service Medal, and unlock your Weekly Care Package reward. Unlike many shooters where XP is simply tied to kill counts, Valve uses two distinct calculation architectures.</p>
+        <p>In Counter-Strike 2, experience points (XP) determine your Profile Rank, earn your annual Service Medal, and unlock your Weekly Care Package reward. Unlike games where XP is simply tied to kill counts, CS2 uses two calculation methods depending on the game mode.</p>
       </div>
 
       <div class="guide-article-grid">
@@ -631,7 +666,7 @@
                   <td><span class="tier-badge tier-pen">Tier 4</span></td>
                   <td>&gt; 11,166 XP</td>
                   <td><strong>0.175&times; Throttled</strong> (-82.5% Penalty)</td>
-                  <td>Reduced XP Overload</td>
+                  <td>Reduced XP Penalty</td>
                 </tr>
               </tbody>
             </table>
@@ -688,7 +723,7 @@
       <div class="guide-section-intro">
         <h2>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ct-cyan)" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-          Frequently Asked Questions (CS2 XP Telemetry)
+          Frequently Asked Questions
         </h2>
         <p>Direct answers to the most common questions regarding Counter-Strike 2 XP calculation, reset schedules, drop mechanics, and efficiency.</p>
       </div>
@@ -713,7 +748,7 @@
             <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </summary>
           <div class="faq-body">
-            <p>For solo players, <strong>Deathmatch</strong> yields the highest consistent XP throughput (~40.0 XP/minute) due to fixed 10-minute timers and zero downtime. For coordinated 3-player squads, <strong>Rush 3v3</strong> can reach up to <strong>45.98 XP/minute</strong> when scoring fast 4-round lead castle captures in under 6 minutes. Premier offers the largest XP lump sum (up to 1,560 XP on a win with 4x bonus) averaging ~37.1 XP/minute.</p>
+            <p>For solo players, <strong>Deathmatch</strong> yields the highest consistent XP throughput (~40.0 XP/minute) due to fixed 10-minute timers and continuous frags. In Rush 3v3, fast wins with a 4-round lead can reach up to ~46 XP/minute in short 5-minute matches. Premier offers the largest single-match XP payout (up to 1,560 XP on a win with 4x bonus) averaging ~37.1 XP/minute.</p>
           </div>
         </details>
 
@@ -737,7 +772,7 @@
             <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </summary>
           <div class="faq-body">
-            <p><strong>Reduced XP</strong> (also known as the XP Overload throttle) activates once a player accumulates more than <strong>11,166 XP</strong> in a single reset week. In this state, base XP is multiplied by <code>0.175</code>, causing matches to award approximately 82.5% less XP.</p>
+            <p><strong>Reduced XP</strong> activates once a player accumulates more than <strong>11,166 XP</strong> in a single reset week (which also awards the in-game XP Overload icon). In this state, base XP is multiplied by <code>0.175</code>, causing matches to award approximately 82.5% less XP.</p>
             <p><strong>How to fix it:</strong> Reduced XP cannot be bypassed or removed through in-game actions. It automatically clears on the next weekly reset every Wednesday at 01:00 UTC.</p>
           </div>
         </details>
@@ -771,7 +806,7 @@
         Counter-Strike 2 XP Benchmarks &middot; Built for CS2 Players &middot; 
         <a href="https://github.com/naczo5/cs2-xp-calculator" target="_blank" rel="noopener noreferrer" style="color:var(--amber-bright);text-decoration:none">GitHub Repository</a>
       </div>
-      <div>Telemetry verified against official Source 2 match data &middot; 2026 Season</div>
+      <div>Formulas verified against in-game CS2 match results &middot; Updated for 2026</div>
     </footer>
 
   </div>

@@ -1,4 +1,4 @@
-// CS2 XP Telemetry & Average Benchmarks Logic
+// CS2 XP Calculator & Mode Benchmarks Logic
 (function () {
   "use strict";
 
@@ -305,12 +305,23 @@
     updateBenchmarkList();
   });
 
-  // Weekly Reset Countdown Telemetry
+  // Weekly Reset Countdown & Hover Popup (Local & UTC Times)
   function initWeeklyResetCountdown() {
     const timerEl = document.getElementById("reset-timer-val");
+    const chipEl = document.getElementById("chip-reset-countdown");
+    const popupCountdown = document.getElementById("popup-reset-countdown");
+    const popupLocalTime = document.getElementById("popup-local-time");
+    const popupLocalTz = document.getElementById("popup-local-tz");
+    const popupUtcTime = document.getElementById("popup-utc-time");
+
     if (!timerEl) return;
 
-    function update() {
+    let userTz = "";
+    try {
+      userTz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+    } catch (e) {}
+
+    function getNextResetDate() {
       const now = new Date();
       const day = now.getUTCDay();
       let daysUntilWed = (3 - day + 7) % 7;
@@ -325,10 +336,16 @@
       if (day === 3 && now.getTime() >= target.getTime()) {
         target.setUTCDate(target.getUTCDate() + 7);
       }
+      return { now, target };
+    }
 
+    function update() {
+      const { now, target } = getNextResetDate();
       const diff = target.getTime() - now.getTime();
+
       if (diff <= 0) {
         timerEl.textContent = "RESETTING NOW";
+        if (popupCountdown) popupCountdown.textContent = "Resetting now";
         return;
       }
 
@@ -338,13 +355,92 @@
       const s = Math.floor((diff / 1000) % 60);
 
       timerEl.textContent = `IN ${d}d ${h}h ${m}m ${s}s`;
+      if (popupCountdown) {
+        popupCountdown.textContent = `In ${d}d ${h}h ${m}m ${s}s`;
+      }
+
+      // Format target in user's local time
+      if (popupLocalTime) {
+        try {
+          const localStr = target.toLocaleString(undefined, {
+            weekday: "short",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            timeZoneName: "short"
+          });
+          popupLocalTime.textContent = localStr;
+        } catch (e) {
+          popupLocalTime.textContent = target.toLocaleString();
+        }
+      }
+
+      // Timezone label with offset
+      if (popupLocalTz) {
+        try {
+          const offsetMin = -target.getTimezoneOffset();
+          const offsetHours = Math.floor(Math.abs(offsetMin) / 60);
+          const offsetMinsRemainder = Math.abs(offsetMin) % 60;
+          const offsetSign = offsetMin >= 0 ? "+" : "-";
+          const offsetStr = `UTC${offsetSign}${offsetHours}${offsetMinsRemainder > 0 ? `:${offsetMinsRemainder}` : ""}`;
+          popupLocalTz.textContent = userTz ? `${userTz} (${offsetStr})` : offsetStr;
+        } catch (e) {
+          popupLocalTz.textContent = userTz || "Local";
+        }
+      }
+
+      // Format target in UTC time
+      if (popupUtcTime) {
+        try {
+          const utcStr = target.toLocaleString("en-US", {
+            weekday: "short",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+            timeZone: "UTC"
+          }) + " UTC";
+          popupUtcTime.textContent = utcStr;
+        } catch (e) {
+          popupUtcTime.textContent = "Wed, 01:00 UTC";
+        }
+      }
+    }
+
+    // Toggle on mobile click / keyboard navigation
+    if (chipEl) {
+      chipEl.addEventListener("click", (e) => {
+        if (e.target.closest(".reset-hover-popup")) return;
+        const isOpen = chipEl.classList.toggle("is-open");
+        chipEl.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+
+      chipEl.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          const isOpen = chipEl.classList.toggle("is-open");
+          chipEl.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        } else if (e.key === "Escape" && chipEl.classList.contains("is-open")) {
+          chipEl.classList.remove("is-open");
+          chipEl.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!chipEl.contains(e.target)) {
+          chipEl.classList.remove("is-open");
+          chipEl.setAttribute("aria-expanded", "false");
+        }
+      });
     }
 
     update();
     setInterval(update, 1000);
   }
 
-  // Tactical Share Action
+  // Share Link Action
   function initShareButton() {
     const shareBtn = document.getElementById("btn-share-page");
     const toast = document.getElementById("tactical-toast");
@@ -365,7 +461,7 @@
           document.execCommand("copy");
           document.body.removeChild(input);
         }
-        if (toastMsg) toastMsg.textContent = "URL copied to clipboard! Ready to share on Discord / Reddit";
+        if (toastMsg) toastMsg.textContent = "URL copied to clipboard!";
       } catch (err) {
         if (toastMsg) toastMsg.textContent = "Share link: " + shareUrl;
       }

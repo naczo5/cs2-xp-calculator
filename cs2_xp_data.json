@@ -20,7 +20,7 @@
       "multiplier": 10,
       "metric": "rounds_won",
       "win_conditions": [
-        "First team to reach a 4-round net lead (Castle capture / tug-of-war completion)",
+        "First team to reach a 4-round net lead",
         "First team to reach 8 round wins (if no 4-round lead reached in regulation)"
       ],
       "max_win_rounds": 8,
@@ -194,7 +194,7 @@
       "duration_minutes": 5.22,
       "score": { "ct": 2, "t": 6 },
       "player_team": "T",
-      "end_reason": "4-round net lead reached (6-2, Castle captured)",
+      "end_reason": "4-round net lead reached (6-2)",
       "player_stats": {
         "kills": 4,
         "deaths": 2,
