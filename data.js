@@ -99,13 +99,13 @@ window.CS2_XP_DATA = {
       id: "rush",
       name: "Rush (3v3)",
       type: "round_based",
-      formula: "Rounds Won × 10",
+      formula: "Rounds Won × 15",
       unit: "rounds won",
       metricLabel: "Rounds Won",
       minMetric: 0,
       maxMetric: 8,
       metricStep: 0.5,
-      multiplier: 10,
+      multiplier: 15,
       avgDuration: 7.5,  // Verified across short blowouts (5m) and full games (10m)
       avgMetric: 5.5,    // Average rounds won at 50% winrate
       winMetric: 6.0,    // Fast 4-round lead win (6-2 in ~5.2 min)
@@ -176,10 +176,10 @@ window.CS2_XP_DATA = {
       result: "Win (First to 8)",
       time: "10:51 (10.85m)",
       roundsWon: 8,
-      baseXp: 80,
-      maxBonusXp: 320,
-      baseXpMin: 7.37,
-      maxXpMin: 29.49
+      baseXp: 120,
+      maxBonusXp: 480,
+      baseXpMin: 11.06,
+      maxXpMin: 44.24
     },
     {
       id: "proof-2",
@@ -188,10 +188,10 @@ window.CS2_XP_DATA = {
       result: "Win (8 Wins + 4 Lead)",
       time: "9:17 (9.28m)",
       roundsWon: 8,
-      baseXp: 80,
-      maxBonusXp: 320,
-      baseXpMin: 8.62,
-      maxXpMin: 34.48
+      baseXp: 120,
+      maxBonusXp: 480,
+      baseXpMin: 12.93,
+      maxXpMin: 51.72
     },
     {
       id: "proof-3",
@@ -200,10 +200,10 @@ window.CS2_XP_DATA = {
       result: "Win (Instant 4 Lead)",
       time: "5:13 (5.22m)",
       roundsWon: 6,
-      baseXp: 60,
-      maxBonusXp: 240,
-      baseXpMin: 11.50,
-      maxXpMin: 45.98
+      baseXp: 90,
+      maxBonusXp: 360,
+      baseXpMin: 17.24,
+      maxXpMin: 68.97
     }
   ]
 };

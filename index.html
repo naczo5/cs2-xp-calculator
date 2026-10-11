@@ -95,7 +95,7 @@
             "name": "How is XP calculated in Counter-Strike 2 (CS2)?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "In CS2, XP is calculated using two distinct methods based on game mode. Round-based competitive modes award XP based strictly on rounds won: Premier and Competitive award Rounds Won × 30, Wingman awards Rounds Won × 15, and Rush awards Rounds Won × 10. Individual score, kills, deaths, or MVP stars do not affect XP in competitive modes. In score-based arcade modes, XP is based on player score: Casual awards Score × 4.0, Retakes awards Score × 2.0, Arms Race awards Score × 1.0, and Deathmatch awards Score × 0.2."
+              "text": "In CS2, XP is calculated using two distinct methods based on game mode. Round-based competitive modes award XP based strictly on rounds won: Premier and Competitive award Rounds Won × 30, Wingman awards Rounds Won × 15, and Rush awards Rounds Won × 15. Individual score, kills, deaths, or MVP stars do not affect XP in competitive modes. In score-based arcade modes, XP is based on player score: Casual awards Score × 4.0, Retakes awards Score × 2.0, Arms Race awards Score × 1.0, and Deathmatch awards Score × 0.2."
             }
           },
           {
@@ -127,7 +127,7 @@
             "name": "What is the fastest game mode to get XP in CS2?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "For solo play, Deathmatch offers the highest sustained rate (~40.0 XP/min) if you score consistently. In Rush 3v3, fast wins with a 4-round lead can yield up to ~46 XP/min. Premier and Competitive provide the largest single-match payouts (up to 1,560 XP on a win with 4x bonus) averaging ~37.1 XP/min."
+              "text": "Rush (3v3) offers the highest overall throughput in the game (~43.7 XP/min on average, up to ~69 XP/min on fast 4-round lead wins). For solo play without a premade team, Deathmatch offers the most consistent sustained rate (~40.0 XP/min). Premier and Competitive provide the largest single-match payouts (up to 1,560 XP on a win with 4x bonus) averaging ~37.1 XP/min."
             }
           },
           {
@@ -348,25 +348,25 @@
         <div class="cockpit-tile-matrix">
           <div class="cockpit-tile highlight">
             <span class="cockpit-tile-label">Total Match XP</span>
-            <span class="cockpit-tile-value tabular-nums" id="readout-total-xp">240 XP</span>
-            <span class="cockpit-tile-subtext tabular-nums" id="readout-breakdown">60 Base + 180 Bonus</span>
+            <span class="cockpit-tile-value tabular-nums" id="readout-total-xp">360 XP</span>
+            <span class="cockpit-tile-subtext tabular-nums" id="readout-breakdown">90 Base + 270 Bonus</span>
           </div>
 
           <div class="cockpit-tile highlight">
             <span class="cockpit-tile-label">XP Throughput</span>
-            <span class="cockpit-tile-value tabular-nums" id="readout-rate-min">32.00 <span style="font-size:0.9rem;font-weight:600">XP/m</span></span>
-            <span class="cockpit-tile-subtext tabular-nums" id="readout-rate-hour">1,920 XP / hour</span>
+            <span class="cockpit-tile-value tabular-nums" id="readout-rate-min">48.00 <span style="font-size:0.9rem;font-weight:600">XP/m</span></span>
+            <span class="cockpit-tile-subtext tabular-nums" id="readout-rate-hour">2,880 XP / hour</span>
           </div>
 
           <div class="cockpit-tile">
             <span class="cockpit-tile-label">Matches to 5,000 XP (Weekly Drop)</span>
-            <span class="cockpit-tile-value tabular-nums" id="readout-matches-needed">21 <span style="font-size:0.9rem;font-weight:600">matches</span></span>
-            <span class="cockpit-tile-subtext tabular-nums" id="readout-time-needed">~2.6 hours of play</span>
+            <span class="cockpit-tile-value tabular-nums" id="readout-matches-needed">14 <span style="font-size:0.9rem;font-weight:600">matches</span></span>
+            <span class="cockpit-tile-subtext tabular-nums" id="readout-time-needed">~1.8 hours of play</span>
           </div>
 
           <div class="cockpit-tile">
             <span class="cockpit-tile-label">Minutes to 1,000 XP</span>
-            <span class="cockpit-tile-value tabular-nums" id="readout-time-1k">31.3 <span style="font-size:0.9rem;font-weight:600">min</span></span>
+            <span class="cockpit-tile-value tabular-nums" id="readout-time-1k">20.8 <span style="font-size:0.85rem;font-weight:600">min</span></span>
             <span class="cockpit-tile-subtext">At current throughput</span>
           </div>
         </div>
@@ -383,7 +383,7 @@
         <div class="formula-telemetry-list">
           <div class="formula-telemetry-row">
             <span class="formula-mode-name">Rush (3v3)</span>
-            <span class="formula-math-expr">Rounds Won &times; 10</span>
+            <span class="formula-math-expr">Rounds Won &times; 15</span>
           </div>
           <div class="formula-telemetry-row">
             <span class="formula-mode-name">Premier / Competitive</span>
@@ -422,8 +422,8 @@
               <span style="font-size:0.68rem;color:var(--text-muted);display:block">Fast win: 4-round lead (6-2)</span>
             </div>
             <div style="text-align:right" class="tabular-nums">
-              <span class="proof-detail-meta">5:13 &middot; 60 Base / 240 Max</span>
-              <span style="display:block;color:var(--amber-bright);font-weight:700">45.98 XP/min</span>
+              <span class="proof-detail-meta">5:13 &middot; 90 Base / 360 Max</span>
+              <span style="display:block;color:var(--amber-bright);font-weight:700">68.97 XP/min</span>
             </div>
           </div>
 
@@ -433,8 +433,8 @@
               <span style="font-size:0.68rem;color:var(--text-muted);display:block">Win: 4-round lead (8-4)</span>
             </div>
             <div style="text-align:right" class="tabular-nums">
-              <span class="proof-detail-meta">9:17 &middot; 80 Base / 320 Max</span>
-              <span style="display:block;color:var(--amber-bright);font-weight:700">34.48 XP/min</span>
+              <span class="proof-detail-meta">9:17 &middot; 120 Base / 480 Max</span>
+              <span style="display:block;color:var(--amber-bright);font-weight:700">51.72 XP/min</span>
             </div>
           </div>
 
@@ -444,8 +444,8 @@
               <span style="font-size:0.68rem;color:var(--text-muted);display:block">Close win: 8-7 (Full regulation)</span>
             </div>
             <div style="text-align:right" class="tabular-nums">
-              <span class="proof-detail-meta">10:51 &middot; 80 Base / 320 Max</span>
-              <span style="display:block;color:var(--amber-bright);font-weight:700">29.49 XP/min</span>
+              <span class="proof-detail-meta">10:51 &middot; 120 Base / 480 Max</span>
+              <span style="display:block;color:var(--amber-bright);font-weight:700">44.24 XP/min</span>
             </div>
           </div>
         </div>
@@ -477,7 +477,7 @@
             <p>Winning 13 rounds gives <strong>390 Base XP</strong> (or up to 1,560 XP under Tier 1 Max Weekly Bonus). A loss where you won 8 rounds still yields <strong>240 Base XP</strong>.</p>
           </div>
           <p><strong>Wingman (2v2):</strong> <code>Base XP = Rounds Won &times; 15</code> (Max 9 wins = 135 Base XP).</p>
-          <p><strong>Rush (3v3):</strong> <code>Base XP = Rounds Won &times; 10</code> (Matches conclude when a team claims an instant 4-round lead or reaches 8 rounds).</p>
+          <p><strong>Rush (3v3):</strong> <code>Base XP = Rounds Won &times; 15</code> (Matches conclude when a team claims an instant 4-round lead or reaches 8 rounds).</p>
         </div>
 
         <!-- Score Based Panel -->
@@ -516,13 +516,22 @@
             </thead>
             <tbody>
               <tr>
+                <td><strong>Rush (3v3)</strong></td>
+                <td>Rounds Won &times; 15</td>
+                <td>7.5 min</td>
+                <td>5.5 rounds</td>
+                <td>82 XP</td>
+                <td>328 XP</td>
+                <td><strong style="color:var(--amber-bright)">43.7 XP/m</strong></td>
+              </tr>
+              <tr>
                 <td><strong>Deathmatch</strong></td>
                 <td>Score &times; 0.2</td>
                 <td>10.0 min</td>
                 <td>500 pts</td>
                 <td>100 XP</td>
                 <td>400 XP</td>
-                <td><strong style="color:var(--amber-bright)">40.0 XP/m</strong></td>
+                <td><strong>40.0 XP/m</strong></td>
               </tr>
               <tr>
                 <td><strong>Premier / Comp</strong></td>
@@ -541,15 +550,6 @@
                 <td>105 XP</td>
                 <td>420 XP</td>
                 <td><strong>35.0 XP/m</strong></td>
-              </tr>
-              <tr>
-                <td><strong>Rush (3v3)</strong></td>
-                <td>Rounds Won &times; 10</td>
-                <td>7.5 min</td>
-                <td>5.5 rounds</td>
-                <td>55 XP</td>
-                <td>220 XP</td>
-                <td><strong>29.3 XP/m</strong></td>
               </tr>
               <tr>
                 <td><strong>Casual (10v10)</strong></td>
@@ -737,7 +737,7 @@
           </summary>
           <div class="faq-body">
             <p>In CS2, XP calculation depends entirely on game mode category:</p>
-            <p>&bull; <strong>Competitive Modes (Premier, Competitive, Wingman, Rush):</strong> XP is based strictly on rounds won by your team. Premier and Comp award <code>Rounds Won &times; 30</code>, Wingman awards <code>Rounds Won &times; 15</code>, and Rush awards <code>Rounds Won &times; 10</code>. Individual frags, MVP stars, or scores have zero impact on your XP in these modes.</p>
+            <p>&bull; <strong>Competitive Modes (Premier, Competitive, Wingman, Rush):</strong> XP is based strictly on rounds won by your team. Premier and Comp award <code>Rounds Won &times; 30</code>, Wingman awards <code>Rounds Won &times; 15</code>, and Rush awards <code>Rounds Won &times; 15</code>. Individual frags, MVP stars, or scores have zero impact on your XP in these modes.</p>
             <p>&bull; <strong>Arcade Modes (Casual, Deathmatch, Arms Race, Retakes):</strong> XP is based on your player score: Casual gives <code>Score &times; 4.0</code>, Retakes gives <code>Score &times; 2.0</code>, Arms Race gives <code>Score &times; 1.0</code>, and Deathmatch gives <code>Score &times; 0.2</code>.</p>
           </div>
         </details>
@@ -748,7 +748,7 @@
             <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </summary>
           <div class="faq-body">
-            <p>For solo players, <strong>Deathmatch</strong> yields the highest consistent XP throughput (~40.0 XP/minute) due to fixed 10-minute timers and continuous frags. In Rush 3v3, fast wins with a 4-round lead can reach up to ~46 XP/minute in short 5-minute matches. Premier offers the largest single-match XP payout (up to 1,560 XP on a win with 4x bonus) averaging ~37.1 XP/minute.</p>
+            <p><strong>Rush (3v3)</strong> yields the highest overall XP throughput (~43.7 XP/minute average, reaching up to ~69 XP/minute on fast 4-round lead wins in short 5-minute matches). For solo players without a premade team, <strong>Deathmatch</strong> offers the highest sustained individual rate (~40.0 XP/minute) due to fixed 10-minute timers and continuous frags. Premier offers the largest single-match XP payout (up to 1,560 XP on a win with 4x bonus) averaging ~37.1 XP/minute.</p>
           </div>
         </details>
 

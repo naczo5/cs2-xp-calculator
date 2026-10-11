@@ -1,7 +1,7 @@
 {
   "meta": {
     "game": "Counter-Strike 2",
-    "updated_at": "2026-09-24",
+    "updated_at": "2026-10-11",
     "description": "CS2 XP calculation formulas, multipliers, and time efficiency statistics for all official game modes."
   },
   "global_mechanics": {
@@ -16,8 +16,8 @@
       "id": "rush",
       "name": "Rush (3v3)",
       "calculation_type": "round_based",
-      "formula": "Rounds Won × 10",
-      "multiplier": 10,
+      "formula": "Rounds Won × 15",
+      "multiplier": 15,
       "metric": "rounds_won",
       "win_conditions": [
         "First team to reach a 4-round net lead",
@@ -25,7 +25,7 @@
       ],
       "max_win_rounds": 8,
       "min_win_rounds": 4,
-      "base_xp_range": { "min_loss": 0, "min_win": 40, "max_win": 80 },
+      "base_xp_range": { "min_loss": 0, "min_win": 60, "max_win": 120 },
       "match_duration_minutes": {
         "fast_blowout_4_0_to_6_2": { "min": 3.5, "avg": 5.2 },
         "medium_match_8_4": { "avg": 9.3 },
@@ -33,11 +33,11 @@
       },
       "realistic_average_duration_minutes": 7.5,
       "base_xp_per_minute": {
-        "fast_win_6_2": 11.50,
-        "medium_win_8_4": 8.62,
-        "close_win_8_7": 7.37,
-        "average_win": 9.33,
-        "average_loss_3_rounds": 4.0
+        "fast_win_6_2": 17.24,
+        "medium_win_8_4": 12.93,
+        "close_win_8_7": 11.06,
+        "average_win": 14.00,
+        "average_loss_3_rounds": 6.0
       }
     },
     {
@@ -155,11 +155,11 @@
         "hs_percentage": 36
       },
       "xp": {
-        "base_earned": 80,
+        "base_earned": 120,
         "rounds_won": 8,
-        "calculated_base": 80,
-        "formula": "8 * 10 = 80",
-        "xp_per_minute": 7.37
+        "calculated_base": 120,
+        "formula": "8 * 15 = 120",
+        "xp_per_minute": 11.06
       }
     },
     {
@@ -179,11 +179,11 @@
         "hs_percentage": 60
       },
       "xp": {
-        "base_earned": 80,
+        "base_earned": 120,
         "rounds_won": 8,
-        "calculated_base": 80,
-        "formula": "8 * 10 = 80",
-        "xp_per_minute": 8.62
+        "calculated_base": 120,
+        "formula": "8 * 15 = 120",
+        "xp_per_minute": 12.93
       }
     },
     {
@@ -203,11 +203,11 @@
         "hs_percentage": 75
       },
       "xp": {
-        "base_earned": 60,
+        "base_earned": 90,
         "rounds_won": 6,
-        "calculated_base": 60,
-        "formula": "6 * 10 = 60",
-        "xp_per_minute": 11.50
+        "calculated_base": 90,
+        "formula": "6 * 15 = 90",
+        "xp_per_minute": 17.24
       }
     }
   ]

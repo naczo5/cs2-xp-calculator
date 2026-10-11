@@ -31,7 +31,7 @@ In competitive matchmaking, **individual kills, assists, MVP stars, and scores a
 | :--- | :--- | :---: | :---: |
 | **Premier & Competitive** | `Rounds Won × 30` | 390 XP (13 wins) | 480 XP (16 wins in OT) |
 | **Wingman (2v2)** | `Rounds Won × 15` | 135 XP (9 wins) | 135 XP (MR8) |
-| **Rush (3v3)** | `Rounds Won × 10` | 80 XP (8 wins) | 60 XP (Fast 4-round lead) |
+| **Rush (3v3)** | `Rounds Won × 15` | 120 XP (8 wins) | 90 XP (Fast 4-round lead) |
 
 > *Note:* Even on a loss, you keep all XP earned for the rounds your team won (e.g. 8 rounds won in Premier yields `8 × 30 = 240 Base XP`).
 
@@ -53,10 +53,10 @@ Ranked by **XP per Minute** under the default **Tier 1 Max Weekly Bonus (4.0× M
 
 | Rank | Game Mode | Match Time | Score / Wins | Total XP (4x) | Throughput | Hours to 5,000 XP Drop |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: |
-| **#1** | **Deathmatch** | 10.0 min | 500 pts | **400 XP** | **40.0 XP/m** | **~2.1 hrs** |
-| **#2** | **Premier / Comp** | 34.0 min | 10.5 rounds | **1,260 XP** | **37.1 XP/m** | **~2.3 hrs** |
-| **#3** | **Wingman (2v2)** | 12.0 min | 7.0 rounds | **420 XP** | **35.0 XP/m** | **~2.4 hrs** |
-| **#4** | **Rush (3v3)** | 7.5 min | 5.5 rounds | **220 XP** | **29.3 XP/m** | **~2.8 hrs** *(Up to 46.0 XP/m on fast 4-round lead wins)* |
+| **#1** | **Rush (3v3)** | 7.5 min | 5.5 rounds | **328 XP** | **43.7 XP/m** | **~1.9 hrs** *(Up to 69.0 XP/m on fast 4-round lead wins)* |
+| **#2** | **Deathmatch** | 10.0 min | 500 pts | **400 XP** | **40.0 XP/m** | **~2.1 hrs** |
+| **#3** | **Premier / Comp** | 34.0 min | 10.5 rounds | **1,260 XP** | **37.1 XP/m** | **~2.3 hrs** |
+| **#4** | **Wingman (2v2)** | 12.0 min | 7.0 rounds | **420 XP** | **35.0 XP/m** | **~2.4 hrs** |
 | **#5** | **Casual (10v10)** | 22.0 min | 35 pts | **560 XP** | **25.5 XP/m** | **~3.3 hrs** |
 | **#6** | **Retakes** | 10.0 min | 30 pts | **240 XP** | **24.0 XP/m** | **~3.5 hrs** |
 | **#7** | **Arms Race** | 8.5 min | 50 pts | **200 XP** | **23.5 XP/m** | **~3.5 hrs** |
