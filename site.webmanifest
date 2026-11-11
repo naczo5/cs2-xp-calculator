@@ -4,8 +4,8 @@
   "description": "Counter-Strike 2 XP calculator, weekly drop timers, and official mode XP formulas.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0c0e12",
-  "theme_color": "#0c0e12",
+  "background_color": "#e9eae4",
+  "theme_color": "#e9eae4",
   "icons": [
     {
       "src": "favicon-16x16.png",

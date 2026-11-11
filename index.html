@@ -12,7 +12,8 @@
   <meta name="author" content="naczo5">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <link rel="canonical" href="https://naczo5.github.io/cs2-xp-calculator/">
-  <meta name="theme-color" content="#0c0e12">
+  <meta name="theme-color" content="#e9eae4">
+  <meta name="color-scheme" content="light">
 
   <!-- Open Graph / Facebook / Discord / WhatsApp / Telegram / LinkedIn -->
   <meta property="og:type" content="website">
@@ -49,7 +50,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700;800&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <!-- Structured Data (JSON-LD) for Google Rich Snippets & FAQ Accordion -->
   <script type="application/ld+json">
@@ -111,7 +112,7 @@
             "name": "When does the weekly XP reset in CS2?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "The CS2 weekly XP bonus and Care Package drop reset every Wednesday at 01:00 UTC (Tuesday at 6:00 PM PDT / 9:00 PM EDT in North America, and Wednesday at 3:00 AM CEST in Europe)."
+              "text": "The CS2 weekly XP bonus and Care Package drop reset every Wednesday at 01:00 UTC (Tuesday 6:00 PM PDT / 9:00 PM EDT in North America, and Wednesday 2:00 AM CET / 3:00 AM CEST in Europe)."
             }
           },
           {
@@ -177,645 +178,461 @@
 </head>
 <body>
 
-  <div class="telemetry-shell">
+  <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- TOP QUICK NAVIGATION & SHARE STRIP -->
-    <nav class="tactical-quick-nav" aria-label="Page navigation">
-      <div class="quick-nav-links">
-        <a href="#benchmarks">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-          Benchmarks
-        </a>
-        <a href="#calculator">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-          XP Calculator
-        </a>
-        <a href="#how-xp-works">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-          How XP Works
-        </a>
-        <a href="#weekly-bonus">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
-          Weekly Multipliers
-        </a>
-        <a href="#faq">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-          FAQ
-        </a>
-      </div>
-      <button type="button" class="share-chip-btn" id="btn-share-page" title="Copy shareable link for Discord, Reddit, or team chats">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
-        <span>SHARE CALCULATOR</span>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="wordmark" href="#top">CS2 <span class="wordmark-xp">XP</span><span class="sr-only">, back to top</span></a>
+      <nav class="site-nav" aria-label="Page sections">
+        <a href="#benchmarks">Rankings</a>
+        <a href="#calculator">Calculator</a>
+        <a href="#formulas">Formulas</a>
+        <a href="#weekly-bonus">Weekly bonus</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <button type="button" class="share-btn" id="btn-share-page" title="Copy a link to this page">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+        Share
       </button>
-    </nav>
+    </div>
+  </header>
 
-    <!-- 1. TOP HEADER & RESET STATUS -->
-    <header class="hud-masthead">
-      <div class="masthead-identity">
-        <div class="cs2-tactical-badge">CS2</div>
-        <div class="masthead-title-block">
-          <h1>CS2 XP & Match Calculator</h1>
-          <p>Exact Match Formulas &middot; Rate Benchmarks &middot; Weekly Care Package Drops</p>
+  <main id="main">
+    <div class="wrap">
+
+      <div class="statusline">
+        <div class="status-reset" id="reset-status">
+          <button type="button" class="reset-trigger" id="reset-trigger" aria-expanded="false" aria-haspopup="dialog" aria-controls="reset-popup">
+            <span class="status-dot" aria-hidden="true"></span>
+            Weekly reset in <strong id="reset-timer-val">—</strong>
+          </button>
+
+          <div class="reset-popup" id="reset-popup" role="tooltip" aria-hidden="true">
+            <div class="reset-popup-head">
+              <span class="reset-popup-title">Next CS2 reset</span>
+              <span class="reset-popup-countdown" id="popup-reset-countdown">—</span>
+            </div>
+            <div class="reset-time-block">
+              <span class="reset-time-label">Your local time</span>
+              <span class="reset-time-tz" id="popup-local-tz">Local</span>
+              <span class="reset-time-value" id="popup-local-time">Loading…</span>
+            </div>
+            <div class="reset-time-block">
+              <span class="reset-time-label">Valve time (UTC)</span>
+              <span class="reset-time-tz">UTC</span>
+              <span class="reset-time-value reset-time-mono" id="popup-utc-time">Wed, 01:00 UTC</span>
+            </div>
+            <p class="reset-popup-foot">Restores the bonus pool and the weekly care package.</p>
+          </div>
         </div>
+
+        <span class="status-item">5,000 XP per weekly drop</span>
+        <span class="status-item status-item-end">Formulas checked against in-game matches, 2026</span>
       </div>
-      <div class="masthead-telemetry">
-        <div class="telemetry-chip" title="Weekly Care Package drops require 5,000 XP (1 Profile Rank)">
-          <span>CARE PACKAGE: <strong>5,000 XP</strong></span>
-        </div>
-        <div class="telemetry-chip reset-chip-interactive" id="chip-reset-countdown" tabindex="0" role="button" aria-haspopup="dialog" aria-expanded="false" aria-label="CS2 Weekly Reset Time Details">
-          <span class="reset-chip-content">RESET: <strong id="reset-timer-val">WED 01:00 UTC</strong></span>
-          <svg class="chip-info-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
 
-          <!-- Hover / Focus Popup for Local & UTC Reset Times -->
-          <div class="reset-hover-popup" id="reset-popup" role="tooltip" aria-hidden="true">
-            <div class="reset-popup-header">
-              <div class="reset-popup-title-row">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--amber-bright)" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
-                <span class="reset-popup-title">NEXT CS2 RESET</span>
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1 id="hero-title">Which CS2 mode pays the most XP per minute?</h1>
+          <p class="hero-deck">The rate moves with your weekly bonus, so set your tier first. Then compare all seven modes and price out a match of your own.</p>
+
+          <p class="hero-answer">
+            <span class="hero-answer-main"><strong id="hero-answer-mode">Rush (3v3)</strong> pays <strong class="hero-answer-rate" id="hero-answer-rate">43.7 XP/min</strong>, the best rate in <span id="hero-answer-view">a typical match</span>.</span>
+            <span class="hero-answer-note" id="hero-answer-note">0 – 4,500 XP at the 4× weekly bonus.</span>
+          </p>
+
+          <div class="hero-actions">
+            <a class="button-primary" href="#calculator">Calculate your match</a>
+            <a class="text-link" href="#how-xp-works">How XP works</a>
+          </div>
+        </div>
+
+        <div class="hero-data">
+          <div class="tier-bar">
+            <div class="tier-bar-copy">
+              <span class="field-label">Weekly bonus</span>
+              <p id="tier-bar-note">Full bonus, first 4,500 XP after the reset.</p>
+            </div>
+            <div class="tier-switch" id="tier-switch-group" role="group" aria-label="Weekly bonus tier">
+              <!-- Rendered by app.js -->
+            </div>
+          </div>
+
+          <section class="rank-panel" id="benchmarks" aria-labelledby="rank-heading">
+            <div class="rank-head">
+              <h2 id="rank-heading">Mode rankings</h2>
+              <div class="view-switch" role="group" aria-label="Match type">
+                <button type="button" class="view-tab active" id="btn-view-avg" aria-pressed="true">Typical match</button>
+                <button type="button" class="view-tab" id="btn-view-win" aria-pressed="false">Winning match</button>
               </div>
-              <span class="reset-popup-countdown tabular-nums font-mono" id="popup-reset-countdown">In --d --h</span>
+            </div>
+            <div class="rank-stack" id="benchmark-stack">
+              <!-- Rendered by app.js -->
+            </div>
+            <p class="rank-note">Click a mode to load it into the calculator. Rates include the selected weekly bonus and are rounded to one decimal.</p>
+          </section>
+        </div>
+      </section>
+    </div>
+
+    <section class="console" id="calculator" aria-labelledby="calc-heading">
+      <div class="wrap console-inner">
+        <div class="console-head">
+          <div>
+            <h2 id="calc-heading">Price out your match</h2>
+            <p>Choose a mode, set your rounds or score, then adjust the clock. The weekly bonus applies automatically.</p>
+          </div>
+          <p class="console-tier" id="calc-tier-indicator"><span class="console-tier-label">Tier</span> <strong>Full bonus · 4×</strong></p>
+        </div>
+
+        <div class="console-body">
+          <div class="console-controls">
+            <div class="mode-strip" id="calc-mode-strip" role="group" aria-label="Game mode">
+              <!-- Rendered by app.js -->
             </div>
 
-            <div class="reset-popup-times">
-              <!-- Local Time Row -->
-              <div class="reset-time-block highlight">
-                <div class="reset-time-meta">
-                  <span class="reset-time-label">YOUR LOCAL TIME</span>
-                  <span class="reset-time-tz font-mono" id="popup-local-tz">Local</span>
-                </div>
-                <div class="reset-time-value" id="popup-local-time">Loading local time...</div>
+            <div class="control">
+              <div class="control-head">
+                <label for="calc-metric-slider" id="calc-metric-label">Rounds won</label>
+                <output class="control-value" id="calc-metric-live" for="calc-metric-slider">5.5 rounds</output>
               </div>
-
-              <!-- UTC Time Row -->
-              <div class="reset-time-block">
-                <div class="reset-time-meta">
-                  <span class="reset-time-label">VALVE OFFICIAL TIME</span>
-                  <span class="reset-time-tz font-mono">UTC</span>
-                </div>
-                <div class="reset-time-value font-mono" id="popup-utc-time">Wed, 01:00 UTC</div>
+              <div class="control-row">
+                <button type="button" class="step-btn" id="btn-metric-dec" aria-label="Decrease rounds won">−</button>
+                <input type="range" class="range" id="calc-metric-slider" min="0" max="8" value="5.5" step="0.5">
+                <button type="button" class="step-btn" id="btn-metric-inc" aria-label="Increase rounds won">+</button>
               </div>
             </div>
 
-            <div class="reset-popup-footer">
-              Resets Weekly Care Package drops &amp; restores the Tier 1 (4.0&times;) XP bonus pool.
+            <div class="control">
+              <div class="control-head">
+                <label for="calc-duration-slider">Match duration</label>
+                <output class="control-value" id="calc-duration-live" for="calc-duration-slider">7.5 min</output>
+              </div>
+              <div class="control-row">
+                <button type="button" class="step-btn" id="btn-dur-dec" aria-label="Decrease match duration">−</button>
+                <input type="range" class="range" id="calc-duration-slider" min="1" max="20" value="7.5" step="0.5">
+                <button type="button" class="step-btn" id="btn-dur-inc" aria-label="Increase match duration">+</button>
+              </div>
+            </div>
+
+            <p class="mode-notes" id="calc-mode-notes">
+              <!-- Rendered by app.js -->
+            </p>
+          </div>
+
+          <div class="readout-board">
+            <div class="readout readout-total">
+              <span class="readout-label">Total match XP</span>
+              <strong class="readout-value" id="readout-total-xp">328</strong>
+              <span class="readout-sub" id="readout-breakdown">82 base + 246 bonus</span>
+              <div class="drop-track" aria-hidden="true"><span class="drop-fill" id="readout-drop-fill"></span></div>
+              <span class="drop-caption" id="readout-drop-caption">7% of the weekly drop</span>
+            </div>
+            <div class="readout">
+              <span class="readout-label">XP per minute</span>
+              <strong class="readout-value readout-value-accent" id="readout-rate-min">43.7</strong>
+              <span class="readout-sub" id="readout-rate-hour">2,622 XP per hour</span>
+            </div>
+            <div class="readout">
+              <span class="readout-label">Matches to 5,000 XP</span>
+              <strong class="readout-value" id="readout-matches-needed">16</strong>
+              <span class="readout-sub" id="readout-time-needed">~2 hours of play</span>
+            </div>
+            <div class="readout">
+              <span class="readout-label">Minutes per 1,000 XP</span>
+              <strong class="readout-value" id="readout-time-1k">22.9</strong>
+              <span class="readout-sub">at this rate</span>
             </div>
           </div>
         </div>
-      </div>
-    </header>
-
-    <!-- 2. TACTILE MULTIPLIER SELECTOR STRIP -->
-    <section class="multiplier-telemetry-bar">
-      <div class="multiplier-desc-col">
-        <span class="section-tag">Active Weekly Multiplier Tier</span>
-        <span class="sub-hint">Defaulted to Max Weekly Boost (First 4,500 XP earned after reset)</span>
-      </div>
-      <div class="tactile-segmented-switch" id="tier-switch-group">
-        <!-- Rendered by app.js -->
       </div>
     </section>
 
-    <!-- 3. MASTER AVERAGE EFFICIENCY BENCHMARK -->
-    <section id="benchmarks">
-      <div class="section-nav-header">
-        <div class="section-headline">
-          <h2>Mode Efficiency Benchmark (Averages)</h2>
-          <p>Real-world match duration and XP throughput across all official Counter-Strike 2 modes.</p>
+    <div class="wrap">
+
+      <section class="reference" id="formulas" aria-labelledby="formulas-heading">
+        <div class="section-head">
+          <h2 id="formulas-heading">Seven modes, two formulas</h2>
+          <p>Every official mode pays either per round won or per scoreboard point, then applies the weekly bonus. Kills and MVPs only matter in the score-based modes, where they raise your score.</p>
         </div>
-        <div class="benchmark-view-toggle">
-          <button type="button" class="toggle-segment-btn active" id="btn-view-avg">Average Match (50% Winrate)</button>
-          <button type="button" class="toggle-segment-btn" id="btn-view-win">Winning Match (Full Round Win)</button>
-        </div>
-      </div>
 
-      <!-- Telemetry Card Stack -->
-      <div class="benchmark-card-stack" id="benchmark-stack">
-        <!-- Populated dynamically by app.js -->
-      </div>
-    </section>
-
-    <!-- 4. PRECISION COCKPIT CALCULATOR -->
-    <section class="tactical-cockpit-panel" id="calculator">
-      <div class="cockpit-panel-header">
-        <h3>
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-          Custom Match XP Calculator
-        </h3>
-        <span class="telemetry-chip" id="calc-tier-indicator">Active Tier: <strong>Max Weekly Bonus (4.0x)</strong></span>
-      </div>
-
-      <div class="cockpit-panel-body">
-        <!-- Input Steppers & Sliders Column -->
-        <div>
-          <!-- Tactical Mode Selection Strip -->
-          <div class="cockpit-mode-strip" id="calc-mode-strip">
-            <!-- Mode buttons -->
+        <div class="reference-grid">
+          <div class="reference-block reference-round">
+            <h3>Rounds-won modes</h3>
+            <dl class="formula-list">
+              <div class="formula-row"><dt>Premier / Competitive</dt><dd>Rounds won × 30</dd></div>
+              <div class="formula-row"><dt>Wingman (2v2)</dt><dd>Rounds won × 15</dd></div>
+              <div class="formula-row"><dt>Rush (3v3)</dt><dd>Rounds won × 15</dd></div>
+            </dl>
+            <p class="reference-note">Your score, K/D and MVP stars add nothing here. You keep XP for every round your team wins, even in a loss.</p>
           </div>
 
-          <!-- Metric Dial / Stepper -->
-          <div class="mechanical-stepper-cell">
-            <div class="stepper-header-row">
-              <span class="stepper-title" id="calc-metric-label">Rounds Won</span>
-              <span class="stepper-readout tabular-nums" id="calc-metric-live">6 Rounds</span>
-            </div>
-            <div class="stepper-input-row">
-              <button type="button" class="tactical-stepper-btn" id="btn-metric-dec" aria-label="Decrease rounds won">&minus;</button>
-              <input type="range" class="cockpit-slider" id="calc-metric-slider" min="0" max="8" value="6" step="0.5" aria-label="Rounds won slider">
-              <button type="button" class="tactical-stepper-btn" id="btn-metric-inc" aria-label="Increase rounds won">+</button>
-            </div>
-          </div>
-
-          <!-- Duration Dial / Stepper -->
-          <div class="mechanical-stepper-cell">
-            <div class="stepper-header-row">
-              <span class="stepper-title">Match Duration (Minutes)</span>
-              <span class="stepper-readout tabular-nums" id="calc-duration-live">7.5 min</span>
-            </div>
-            <div class="stepper-input-row">
-              <button type="button" class="tactical-stepper-btn" id="btn-dur-dec" aria-label="Decrease match duration">&minus;</button>
-              <input type="range" class="cockpit-slider" id="calc-duration-slider" min="1" max="50" value="7.5" step="0.5" aria-label="Match duration slider">
-              <button type="button" class="tactical-stepper-btn" id="btn-dur-inc" aria-label="Increase match duration">+</button>
-            </div>
-          </div>
-
-          <!-- Tactical Rule Memo -->
-          <div class="mode-rule-memo" id="calc-mode-notes">
-            <!-- Populated dynamically -->
+          <div class="reference-block reference-score">
+            <h3>Score-based modes</h3>
+            <dl class="formula-list">
+              <div class="formula-row"><dt>Casual (10v10)</dt><dd>Score × 4.0</dd></div>
+              <div class="formula-row"><dt>Retakes</dt><dd>Score × 2.0</dd></div>
+              <div class="formula-row"><dt>Arms Race</dt><dd>Score × 1.0</dd></div>
+              <div class="formula-row"><dt>Deathmatch</dt><dd>Score × 0.2</dd></div>
+            </dl>
+            <p class="reference-note">XP follows your scoreboard points. Deathmatch runs a fixed 10-minute clock and caps payouts against bot lobbies.</p>
           </div>
         </div>
 
-        <!-- Cockpit Readout Matrix Column -->
-        <div class="cockpit-tile-matrix">
-          <div class="cockpit-tile highlight">
-            <span class="cockpit-tile-label">Total Match XP</span>
-            <span class="cockpit-tile-value tabular-nums" id="readout-total-xp">360 XP</span>
-            <span class="cockpit-tile-subtext tabular-nums" id="readout-breakdown">90 Base + 270 Bonus</span>
+        <div class="sample-block">
+          <div class="sample-head">
+            <h3>Three Rush matches, measured</h3>
+            <p>Same mode, three different outcomes. Timings and XP from in-game results at the 4× bonus.</p>
           </div>
-
-          <div class="cockpit-tile highlight">
-            <span class="cockpit-tile-label">XP Throughput</span>
-            <span class="cockpit-tile-value tabular-nums" id="readout-rate-min">48.00 <span style="font-size:0.9rem;font-weight:600">XP/m</span></span>
-            <span class="cockpit-tile-subtext tabular-nums" id="readout-rate-hour">2,880 XP / hour</span>
-          </div>
-
-          <div class="cockpit-tile">
-            <span class="cockpit-tile-label">Matches to 5,000 XP (Weekly Drop)</span>
-            <span class="cockpit-tile-value tabular-nums" id="readout-matches-needed">14 <span style="font-size:0.9rem;font-weight:600">matches</span></span>
-            <span class="cockpit-tile-subtext tabular-nums" id="readout-time-needed">~1.8 hours of play</span>
-          </div>
-
-          <div class="cockpit-tile">
-            <span class="cockpit-tile-label">Minutes to 1,000 XP</span>
-            <span class="cockpit-tile-value tabular-nums" id="readout-time-1k">20.8 <span style="font-size:0.85rem;font-weight:600">min</span></span>
-            <span class="cockpit-tile-subtext">At current throughput</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 5. XP FORMULAS & SAMPLE MATCHES -->
-    <section class="technical-reference-grid">
-      
-      <!-- Official Formulas Reference -->
-      <div class="tactical-reference-box">
-        <h3>Official CS2 XP Formulas</h3>
-        <div class="formula-telemetry-list">
-          <div class="formula-telemetry-row">
-            <span class="formula-mode-name">Rush (3v3)</span>
-            <span class="formula-math-expr">Rounds Won &times; 15</span>
-          </div>
-          <div class="formula-telemetry-row">
-            <span class="formula-mode-name">Premier / Competitive</span>
-            <span class="formula-math-expr">Rounds Won &times; 30</span>
-          </div>
-          <div class="formula-telemetry-row">
-            <span class="formula-mode-name">Wingman (2v2)</span>
-            <span class="formula-math-expr">Rounds Won &times; 15</span>
-          </div>
-          <div class="formula-telemetry-row">
-            <span class="formula-mode-name">Deathmatch</span>
-            <span class="formula-math-expr">Score Points &times; 0.2</span>
-          </div>
-          <div class="formula-telemetry-row">
-            <span class="formula-mode-name">Casual (10v10)</span>
-            <span class="formula-math-expr">Score Points &times; 4.0</span>
-          </div>
-          <div class="formula-telemetry-row">
-            <span class="formula-mode-name">Retakes</span>
-            <span class="formula-math-expr">Score Points &times; 2.0</span>
-          </div>
-          <div class="formula-telemetry-row">
-            <span class="formula-mode-name">Arms Race</span>
-            <span class="formula-math-expr">Score Points &times; 1.0</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sample Match Breakdown -->
-      <div class="tactical-reference-box">
-        <h3>Sample Match Breakdown (Rush)</h3>
-        <div class="match-proof-list">
-          <div class="proof-row-item">
-            <div>
-              <span class="proof-score-tag">6 - 2 Win</span>
-              <span style="font-size:0.68rem;color:var(--text-muted);display:block">Fast win: 4-round lead (6-2)</span>
-            </div>
-            <div style="text-align:right" class="tabular-nums">
-              <span class="proof-detail-meta">5:13 &middot; 90 Base / 360 Max</span>
-              <span style="display:block;color:var(--amber-bright);font-weight:700">68.97 XP/min</span>
-            </div>
-          </div>
-
-          <div class="proof-row-item">
-            <div>
-              <span class="proof-score-tag">8 - 4 Win</span>
-              <span style="font-size:0.68rem;color:var(--text-muted);display:block">Win: 4-round lead (8-4)</span>
-            </div>
-            <div style="text-align:right" class="tabular-nums">
-              <span class="proof-detail-meta">9:17 &middot; 120 Base / 480 Max</span>
-              <span style="display:block;color:var(--amber-bright);font-weight:700">51.72 XP/min</span>
-            </div>
-          </div>
-
-          <div class="proof-row-item">
-            <div>
-              <span class="proof-score-tag">8 - 7 Win</span>
-              <span style="font-size:0.68rem;color:var(--text-muted);display:block">Close win: 8-7 (Full regulation)</span>
-            </div>
-            <div style="text-align:right" class="tabular-nums">
-              <span class="proof-detail-meta">10:51 &middot; 120 Base / 480 Max</span>
-              <span style="display:block;color:var(--amber-bright);font-weight:700">44.24 XP/min</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- 6. HOW CS2 XP IS CALCULATED -->
-    <article class="tactical-guide-section" id="how-xp-works">
-      <div class="guide-section-intro">
-        <h2>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--amber-bright)" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-          How CS2 XP Is Calculated: Complete Guide
-        </h2>
-        <p>In Counter-Strike 2, experience points (XP) determine your Profile Rank, earn your annual Service Medal, and unlock your Weekly Care Package reward. Unlike games where XP is simply tied to kill counts, CS2 uses two calculation methods depending on the game mode.</p>
-      </div>
-
-      <div class="guide-article-grid">
-        
-        <!-- Round Based Panel -->
-        <div class="guide-panel">
-          <h3>
-            <span>1. Objective Round-Based Modes</span>
-            <span class="tier-badge tier-2x">Premier &bull; Comp &bull; Wingman &bull; Rush</span>
-          </h3>
-          <p>In competitive modes, <strong>individual score, kills, K/D ratio, and MVP stars award zero additional XP</strong>. Your entire XP payout is determined exclusively by the number of rounds your team wins:</p>
-          <div class="guide-highlight-box">
-            <p><strong>Premier & Competitive:</strong> <code>Base XP = Rounds Won &times; 30</code></p>
-            <p>Winning 13 rounds gives <strong>390 Base XP</strong> (or up to 1,560 XP under Tier 1 Max Weekly Bonus). A loss where you won 8 rounds still yields <strong>240 Base XP</strong>.</p>
-          </div>
-          <p><strong>Wingman (2v2):</strong> <code>Base XP = Rounds Won &times; 15</code> (Max 9 wins = 135 Base XP).</p>
-          <p><strong>Rush (3v3):</strong> <code>Base XP = Rounds Won &times; 15</code> (Matches conclude when a team claims an instant 4-round lead or reaches 8 rounds).</p>
-        </div>
-
-        <!-- Score Based Panel -->
-        <div class="guide-panel">
-          <h3>
-            <span>2. Arcade Score-Based Modes</span>
-            <span class="tier-badge tier-4x">Deathmatch &bull; Casual &bull; Arms Race</span>
-          </h3>
-          <p>In arcade and casual modes, XP is directly proportional to your in-game scoreboard points (kills, assists, objectives completed):</p>
-          <div class="guide-highlight-box">
-            <p><strong>Casual (10v10):</strong> <code>Base XP = Player Score &times; 4.0</code></p>
-            <p><strong>Deathmatch:</strong> <code>Base XP = Player Score &times; 0.2</code> (Capped against bot lobbies)</p>
-            <p><strong>Retakes:</strong> <code>Base XP = Player Score &times; 2.0</code></p>
-            <p><strong>Arms Race:</strong> <code>Base XP = Player Score &times; 1.0</code></p>
-          </div>
-          <p>Deathmatch has a fixed 10-minute clock. Top fraggers scoring 750 points earn 150 Base XP (600 XP with Tier 1 boost), producing the highest sustained XP/minute in the game.</p>
-        </div>
-
-      </div>
-
-      <!-- Master Mode Summary Table -->
-      <div class="guide-panel" style="margin-bottom:1.5rem">
-        <h3>Official CS2 Game Mode XP Benchmark Matrix</h3>
-        <div class="tactical-table-wrapper">
-          <table class="tactical-data-table">
-            <thead>
-              <tr>
-                <th>Game Mode</th>
-                <th>Formula</th>
-                <th>Avg Match Length</th>
-                <th>Avg Score / Wins</th>
-                <th>Avg Base XP</th>
-                <th>Tier 1 Total XP (4x)</th>
-                <th>Avg Throughput</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Rush (3v3)</strong></td>
-                <td>Rounds Won &times; 15</td>
-                <td>7.5 min</td>
-                <td>5.5 rounds</td>
-                <td>82 XP</td>
-                <td>328 XP</td>
-                <td><strong style="color:var(--amber-bright)">43.7 XP/m</strong></td>
-              </tr>
-              <tr>
-                <td><strong>Deathmatch</strong></td>
-                <td>Score &times; 0.2</td>
-                <td>10.0 min</td>
-                <td>500 pts</td>
-                <td>100 XP</td>
-                <td>400 XP</td>
-                <td><strong>40.0 XP/m</strong></td>
-              </tr>
-              <tr>
-                <td><strong>Premier / Comp</strong></td>
-                <td>Rounds Won &times; 30</td>
-                <td>34.0 min</td>
-                <td>10.5 rounds</td>
-                <td>315 XP</td>
-                <td>1,260 XP</td>
-                <td><strong>37.1 XP/m</strong></td>
-              </tr>
-              <tr>
-                <td><strong>Wingman (2v2)</strong></td>
-                <td>Rounds Won &times; 15</td>
-                <td>12.0 min</td>
-                <td>7.0 rounds</td>
-                <td>105 XP</td>
-                <td>420 XP</td>
-                <td><strong>35.0 XP/m</strong></td>
-              </tr>
-              <tr>
-                <td><strong>Casual (10v10)</strong></td>
-                <td>Score &times; 4.0</td>
-                <td>22.0 min</td>
-                <td>35 pts</td>
-                <td>140 XP</td>
-                <td>560 XP</td>
-                <td><strong>25.5 XP/m</strong></td>
-              </tr>
-              <tr>
-                <td><strong>Retakes</strong></td>
-                <td>Score &times; 2.0</td>
-                <td>10.0 min</td>
-                <td>30 pts</td>
-                <td>60 XP</td>
-                <td>240 XP</td>
-                <td><strong>24.0 XP/m</strong></td>
-              </tr>
-              <tr>
-                <td><strong>Arms Race</strong></td>
-                <td>Score &times; 1.0</td>
-                <td>8.5 min</td>
-                <td>50 pts</td>
-                <td>50 XP</td>
-                <td>200 XP</td>
-                <td><strong>23.5 XP/m</strong></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </article>
-
-    <!-- 7. WEEKLY BONUS MULTIPLIER CURVE & DROPS (SEO DEEP-DIVE) -->
-    <article class="tactical-guide-section" id="weekly-bonus">
-      <div class="guide-section-intro">
-        <h2>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--pulse-green)" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-          Weekly Bonus Multiplier Curve & Reduced XP Penalty
-        </h2>
-        <p>Every profile rank level in CS2 requires <strong>5,000 XP</strong>. To reward regular play and discourage automated farming, Valve implements a diminishing weekly multiplier curve that resets every <strong>Wednesday at 01:00 UTC</strong>.</p>
-      </div>
-
-      <!-- Progression Meter Visual -->
-      <div class="multiplier-meter-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem">
-          <span style="font-family:var(--font-hud);font-size:1.05rem;font-weight:700;color:var(--text-pure)">WEEKLY XP BONUS POOL (11,166 XP CAPACITY)</span>
-          <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-steel)">Resets Every Wednesday 01:00 UTC</span>
-        </div>
-        
-        <div class="multiplier-meter-bar" role="progressbar" aria-label="Weekly XP multiplier progression">
-          <div class="meter-segment seg-tier1" title="Tier 1: 4.0x Multiplier (0 to 4,500 XP)"></div>
-          <div class="meter-segment seg-tier2" title="Tier 2: 2.0x Multiplier (4,500 to 7,500 XP)"></div>
-          <div class="meter-segment seg-tier3" title="Tier 3: 1.0x Base Rate (7,500 to 11,166 XP)"></div>
-        </div>
-
-        <div class="multiplier-meter-legend">
-          <div class="meter-legend-item">
-            <span class="legend-dot" style="background:#10b981"></span>
-            <span><strong>Tier 1 (4.0&times;):</strong> 0 &ndash; 4,500 XP</span>
-          </div>
-          <div class="meter-legend-item">
-            <span class="legend-dot" style="background:#38bdf8"></span>
-            <span><strong>Tier 2 (2.0&times;):</strong> 4,500 &ndash; 7,500 XP</span>
-          </div>
-          <div class="meter-legend-item">
-            <span class="legend-dot" style="background:#94a3b8"></span>
-            <span><strong>Tier 3 (1.0&times;):</strong> 7,500 &ndash; 11,166 XP</span>
-          </div>
-          <div class="meter-legend-item">
-            <span class="legend-dot" style="background:#ef4444"></span>
-            <span><strong>Tier 4 (0.175&times;):</strong> &gt; 11,166 XP</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="guide-article-grid" style="margin-top:1.5rem">
-        
-        <!-- Multiplier Tiers Table -->
-        <div class="guide-panel">
-          <h3>The Four Weekly Multiplier Stages</h3>
-          <div class="tactical-table-wrapper">
-            <table class="tactical-data-table">
+          <div class="table-scroll">
+            <table class="data-table">
               <thead>
                 <tr>
-                  <th>Tier</th>
-                  <th>Weekly XP Range</th>
-                  <th>Multiplier</th>
-                  <th>Status</th>
+                  <th scope="col">Score</th>
+                  <th scope="col">Result</th>
+                  <th scope="col" class="num">Duration</th>
+                  <th scope="col" class="num">Base XP</th>
+                  <th scope="col" class="num">At 4×</th>
+                  <th scope="col" class="num">XP/min</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><span class="tier-badge tier-4x">Tier 1</span></td>
-                  <td>0 &ndash; 4,500 XP</td>
-                  <td><strong>4.0&times; Total</strong> (1x Base + 3x Bonus)</td>
-                  <td>Max Weekly Boost</td>
+                  <td class="mono">6 – 2</td>
+                  <td>Fast win, 4-round lead</td>
+                  <td class="num mono">5:13</td>
+                  <td class="num mono">90</td>
+                  <td class="num mono">360</td>
+                  <td class="num mono strong accent">68.97</td>
                 </tr>
                 <tr>
-                  <td><span class="tier-badge tier-2x">Tier 2</span></td>
-                  <td>4,500 &ndash; 7,500 XP</td>
-                  <td><strong>2.0&times; Total</strong> (1x Base + 1x Bonus)</td>
-                  <td>Reduced Bonus</td>
+                  <td class="mono">8 – 4</td>
+                  <td>Win, 4-round lead</td>
+                  <td class="num mono">9:17</td>
+                  <td class="num mono">120</td>
+                  <td class="num mono">480</td>
+                  <td class="num mono strong accent">51.72</td>
                 </tr>
                 <tr>
-                  <td><span class="tier-badge tier-1x">Tier 3</span></td>
-                  <td>7,500 &ndash; 11,166 XP</td>
-                  <td><strong>1.0&times; Total</strong> (1x Base + 0x Bonus)</td>
-                  <td>Standard Base Rate</td>
-                </tr>
-                <tr>
-                  <td><span class="tier-badge tier-pen">Tier 4</span></td>
-                  <td>&gt; 11,166 XP</td>
-                  <td><strong>0.175&times; Throttled</strong> (-82.5% Penalty)</td>
-                  <td>Reduced XP Penalty</td>
+                  <td class="mono">8 – 7</td>
+                  <td>Close win, full regulation</td>
+                  <td class="num mono">10:51</td>
+                  <td class="num mono">120</td>
+                  <td class="num mono">480</td>
+                  <td class="num mono strong accent">44.24</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+      </section>
 
-        <!-- Weekly Care Package & Service Medals -->
-        <div class="guide-panel">
-          <h3>Weekly Care Package & Service Medal Goals</h3>
-          <p><strong>Weekly Care Package (Drop):</strong> Each week, your first profile rank level-up (5,000 XP) awards you the Care Package. You are presented with 4 items (1 Weapon Case, 1 Weapon Skin, 2 Graffiti Sprays) and select <strong>2 to keep</strong>.</p>
-          <div class="guide-highlight-box">
-            <p><strong>Fastest Route to Weekly Drop:</strong> Play ~2.1 hours of Deathmatch or ~4 wins in Premier under Tier 1 boost.</p>
+      <article class="guide" id="how-xp-works" aria-labelledby="guide-heading">
+        <div class="section-head">
+          <h2 id="guide-heading">How XP is calculated</h2>
+          <p>XP decides your profile rank, your annual service medal and whether you leave the week with a care package. CS2 pays it two ways, and only one of them cares how you play.</p>
+        </div>
+
+        <div class="guide-cols">
+          <div class="guide-col guide-round">
+            <h3>Rounds won, nothing else</h3>
+            <p>In Premier, Competitive, Wingman and Rush, only the rounds your team wins count. Kills, assists, MVP stars and K/D add nothing. A 13–8 Premier win pays 390 base XP, or 1,560 XP at the 4× bonus. Lose 8–13 and you still keep 240 base XP.</p>
+            <p>This makes the round-based modes predictable: the scoreline is the whole payout. Rush and Wingman pay half as much per round as Premier, but their matches end much sooner, which is why Rush leads the rate table.</p>
           </div>
-          <p><strong>Service Medals:</strong> Reaching Profile Rank 40 resets your level to Rank 1 and awards the annual medal. Each medal takes <strong>200,000 XP</strong> (40 levels &times; 5,000 XP). Additional 200,000 XP increments in the same year upgrade your medal color:</p>
-          <div class="medal-tier-grid">
-            <div class="medal-tier-card">
-              <span class="medal-rank">Level 1</span>
-              <div class="medal-name" style="color:#e2e8f0">White / Gray</div>
-              <span class="medal-xp">0 XP</span>
+
+          <div class="guide-col guide-score">
+            <h3>Scoreboard points, scaled</h3>
+            <p>Casual, Deathmatch, Retakes and Arms Race pay per scoreboard point, with a different multiplier for each. A 500-point Deathmatch is 100 base XP; 35 points in Casual is 140; 30 points in Retakes is 60; 50 weapon score in Arms Race is 50.</p>
+            <p>Deathmatch is the most consistent solo option: a fixed 10-minute clock and constant respawns. A 750-point session is 150 base XP, or 600 XP at the 4× bonus.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="weekly" id="weekly-bonus" aria-labelledby="weekly-heading">
+        <div class="section-head">
+          <h2 id="weekly-heading">The weekly bonus, drawn to scale</h2>
+          <p>Every profile rank takes 5,000 XP. Your bonus shrinks as you earn XP after the Wednesday reset, then drops to a reduced rate once the pool is spent.</p>
+        </div>
+
+        <div class="weekly-grid">
+          <figure class="curve-figure">
+            <svg class="curve-chart" viewBox="0 0 660 300" role="img" aria-labelledby="curve-title curve-desc">
+              <title id="curve-title">Weekly XP multiplier by XP earned since reset</title>
+              <desc id="curve-desc">The multiplier is 4× from 0 to 4,500 XP, 2× from 4,500 to 7,500 XP, 1× from 7,500 to 11,166 XP, then 0.175× until the next reset.</desc>
+
+              <line class="chart-axis" x1="64" y1="256" x2="616" y2="256"></line>
+              <line class="chart-axis" x1="64" y1="24" x2="64" y2="256"></line>
+
+              <line class="chart-grid" x1="241.4" y1="24" x2="241.4" y2="256"></line>
+              <line class="chart-grid" x1="359.7" y1="24" x2="359.7" y2="256"></line>
+              <line class="chart-grid" x1="504.3" y1="24" x2="504.3" y2="256"></line>
+
+              <path class="chart-fill" d="M64,256 L64,49.8 L241.4,49.8 L241.4,152.9 L359.7,152.9 L359.7,204.4 L504.3,204.4 L504.3,247 L616,247 L616,256 Z"></path>
+              <path class="chart-line" d="M64,49.8 L241.4,49.8 L241.4,152.9 L359.7,152.9 L359.7,204.4 L504.3,204.4"></path>
+              <path class="chart-line chart-line-penalty" d="M504.3,247 L616,247"></path>
+              <path class="chart-line" d="M504.3,204.4 L504.3,247"></path>
+
+              <circle class="chart-point" cx="241.4" cy="49.8" r="4"></circle>
+              <circle class="chart-point" cx="241.4" cy="152.9" r="4"></circle>
+              <circle class="chart-point" cx="359.7" cy="152.9" r="4"></circle>
+              <circle class="chart-point" cx="359.7" cy="204.4" r="4"></circle>
+              <circle class="chart-point" cx="504.3" cy="204.4" r="4"></circle>
+              <circle class="chart-point chart-point-penalty" cx="504.3" cy="247" r="4"></circle>
+
+              <text class="chart-label" x="64" y="276" text-anchor="start">0</text>
+              <text class="chart-label" x="241.4" y="276" text-anchor="middle">4,500</text>
+              <text class="chart-label" x="359.7" y="276" text-anchor="middle">7,500</text>
+              <text class="chart-label" x="504.3" y="276" text-anchor="middle">11,166</text>
+              <text class="chart-label" x="616" y="276" text-anchor="end">14,000</text>
+              <text class="chart-axis-title" x="64" y="292" text-anchor="start">XP earned since reset</text>
+
+              <text class="chart-label" x="54" y="53.8" text-anchor="end">4×</text>
+              <text class="chart-label" x="54" y="156.9" text-anchor="end">2×</text>
+              <text class="chart-label" x="54" y="208.4" text-anchor="end">1×</text>
+              <text class="chart-label chart-label-penalty" x="54" y="251" text-anchor="end">0.175×</text>
+            </svg>
+            <figcaption>Total multiplier by XP earned since the Wednesday reset. The bonus pool ends at 11,166 XP.</figcaption>
+          </figure>
+
+          <div class="tier-table">
+            <div class="tier-row">
+              <span class="tier-mult">4.0×</span>
+              <div><h3>Full bonus</h3><p>0 – 4,500 XP after reset. Base XP plus a 3× bonus.</p></div>
             </div>
-            <div class="medal-tier-card">
-              <span class="medal-rank">Level 2</span>
-              <div class="medal-name" style="color:#10b981">Green</div>
-              <span class="medal-xp">200,000 XP</span>
+            <div class="tier-row">
+              <span class="tier-mult">2.0×</span>
+              <div><h3>Half bonus</h3><p>4,500 – 7,500 XP. Base XP plus a 1× bonus.</p></div>
             </div>
-            <div class="medal-tier-card">
-              <span class="medal-rank">Level 3</span>
-              <div class="medal-name" style="color:#38bdf8">Blue</div>
-              <span class="medal-xp">400,000 XP</span>
+            <div class="tier-row">
+              <span class="tier-mult">1.0×</span>
+              <div><h3>Base rate</h3><p>7,500 – 11,166 XP. Bonus pool used up.</p></div>
             </div>
-            <div class="medal-tier-card">
-              <span class="medal-rank">Level 4</span>
-              <div class="medal-name" style="color:#c084fc">Purple</div>
-              <span class="medal-xp">600,000 XP</span>
+            <div class="tier-row tier-row-penalty">
+              <span class="tier-mult">0.175×</span>
+              <div><h3>Reduced XP</h3><p>Above 11,166 XP. An 82.5% penalty that lasts until the next reset.</p></div>
             </div>
-            <div class="medal-tier-card">
-              <span class="medal-rank">Level 5</span>
-              <div class="medal-name" style="color:#f472b6">Pink</div>
-              <span class="medal-xp">800,000 XP</span>
-            </div>
-            <div class="medal-tier-card">
-              <span class="medal-rank">Level 6</span>
-              <div class="medal-name" style="color:#ef4444">Red</div>
-              <span class="medal-xp">1,000,000 XP</span>
-            </div>
+            <p class="reference-note tier-note">Your tier is set by XP already earned this week, not by the mode you pick.</p>
           </div>
         </div>
 
-      </div>
-    </article>
-
-    <!-- 8. FREQUENTLY ASKED QUESTIONS (FAQ) -->
-    <section class="faq-section" id="faq">
-      <div class="guide-section-intro">
-        <h2>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ct-cyan)" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-          Frequently Asked Questions
-        </h2>
-        <p>Direct answers to the most common questions regarding Counter-Strike 2 XP calculation, reset schedules, drop mechanics, and efficiency.</p>
-      </div>
-
-      <div class="faq-card-stack">
-
-        <details class="faq-card" open>
-          <summary class="faq-summary">
-            <span>How is XP calculated in Counter-Strike 2?</span>
-            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </summary>
-          <div class="faq-body">
-            <p>In CS2, XP calculation depends entirely on game mode category:</p>
-            <p>&bull; <strong>Competitive Modes (Premier, Competitive, Wingman, Rush):</strong> XP is based strictly on rounds won by your team. Premier and Comp award <code>Rounds Won &times; 30</code>, Wingman awards <code>Rounds Won &times; 15</code>, and Rush awards <code>Rounds Won &times; 15</code>. Individual frags, MVP stars, or scores have zero impact on your XP in these modes.</p>
-            <p>&bull; <strong>Arcade Modes (Casual, Deathmatch, Arms Race, Retakes):</strong> XP is based on your player score: Casual gives <code>Score &times; 4.0</code>, Retakes gives <code>Score &times; 2.0</code>, Arms Race gives <code>Score &times; 1.0</code>, and Deathmatch gives <code>Score &times; 0.2</code>.</p>
+        <div class="drop-grid">
+          <div class="drop-block">
+            <h3>Weekly care package</h3>
+            <p>Your first 5,000 XP each week earns one profile rank and the care package. Pick 2 of 4 items: a weapon case, a weapon finish and two graffiti sprays. Extra levels in the same week do not give a second package.</p>
+            <p class="reference-note">Fastest route at full bonus: about 2 hours of Rush, or four Premier wins.</p>
           </div>
-        </details>
 
-        <details class="faq-card">
-          <summary class="faq-summary">
-            <span>What is the fastest way to get XP in CS2?</span>
-            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </summary>
-          <div class="faq-body">
-            <p><strong>Rush (3v3)</strong> yields the highest overall XP throughput (~43.7 XP/minute average, reaching up to ~69 XP/minute on fast 4-round lead wins in short 5-minute matches). For solo players without a premade team, <strong>Deathmatch</strong> offers the highest sustained individual rate (~40.0 XP/minute) due to fixed 10-minute timers and continuous frags. Premier offers the largest single-match XP payout (up to 1,560 XP on a win with 4x bonus) averaging ~37.1 XP/minute.</p>
+          <div class="medal-block">
+            <h3>Service medals</h3>
+            <p>Reaching rank 40 resets your level and awards the year's medal. Every 200,000 XP after that upgrades its color.</p>
+            <ol class="medal-strip">
+              <li><span class="medal-color" style="--medal:#d9d9d2"></span><span class="medal-name">White</span><span class="medal-xp">0 XP</span></li>
+              <li><span class="medal-color" style="--medal:#2e7d4f"></span><span class="medal-name">Green</span><span class="medal-xp">200k</span></li>
+              <li><span class="medal-color" style="--medal:#2e6fa8"></span><span class="medal-name">Blue</span><span class="medal-xp">400k</span></li>
+              <li><span class="medal-color" style="--medal:#7a5aa8"></span><span class="medal-name">Purple</span><span class="medal-xp">600k</span></li>
+              <li><span class="medal-color" style="--medal:#c25c86"></span><span class="medal-name">Pink</span><span class="medal-xp">800k</span></li>
+              <li><span class="medal-color" style="--medal:#a33a2c"></span><span class="medal-name">Red</span><span class="medal-xp">1M</span></li>
+            </ol>
           </div>
-        </details>
+        </div>
+      </article>
 
-        <details class="faq-card">
-          <summary class="faq-summary">
-            <span>When does the weekly XP reset in CS2?</span>
-            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </summary>
-          <div class="faq-body">
-            <p>The CS2 weekly XP bonus and Care Package drop eligibility reset every <strong>Wednesday at 01:00 UTC</strong>.</p>
-            <p>Local time equivalents include:</p>
-            <p>&bull; North America: Tuesday 6:00 PM PDT / 9:00 PM EDT</p>
-            <p>&bull; Europe: Wednesday 2:00 AM BST / 3:00 AM CEST</p>
-            <p>&bull; Asia: Wednesday 9:00 AM CST / 10:00 AM JST</p>
-          </div>
-        </details>
+      <section class="faq" id="faq" aria-labelledby="faq-heading">
+        <div class="section-head">
+          <h2 id="faq-heading">Questions players ask</h2>
+          <p>Short answers to the parts that still trip people up.</p>
+        </div>
 
-        <details class="faq-card">
-          <summary class="faq-summary">
-            <span>What is Reduced XP in CS2 and how do you get rid of it?</span>
-            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </summary>
-          <div class="faq-body">
-            <p><strong>Reduced XP</strong> activates once a player accumulates more than <strong>11,166 XP</strong> in a single reset week (which also awards the in-game XP Overload icon). In this state, base XP is multiplied by <code>0.175</code>, causing matches to award approximately 82.5% less XP.</p>
-            <p><strong>How to fix it:</strong> Reduced XP cannot be bypassed or removed through in-game actions. It automatically clears on the next weekly reset every Wednesday at 01:00 UTC.</p>
-          </div>
-        </details>
+        <div class="faq-list">
+          <details class="faq-item" open>
+            <summary>
+              <span>How is XP calculated in Counter-Strike 2?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-body">
+              <p>It depends on the mode family:</p>
+              <p><strong>Rounds-won modes.</strong> Premier and Competitive pay <code>rounds won × 30</code>; Wingman and Rush pay <code>rounds won × 15</code>. Kills, assists, MVP stars and score add nothing here.</p>
+              <p><strong>Score-based modes.</strong> Casual pays <code>score × 4.0</code>, Retakes <code>score × 2.0</code>, Arms Race <code>score × 1.0</code> and Deathmatch <code>score × 0.2</code>.</p>
+              <p>The selected weekly bonus multiplies the result. At 4×, every base XP point is worth four.</p>
+            </div>
+          </details>
 
-        <details class="faq-card">
-          <summary class="faq-summary">
-            <span>How much XP is needed for a weekly drop / care package in CS2?</span>
-            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </summary>
-          <div class="faq-body">
-            <p>You need exactly <strong>5,000 XP</strong> (equivalent to one full Profile Rank level) each week to unlock your Weekly Care Package. Once earned, you can choose 2 rewards out of 4 options (active weapon case, weapon finish, or graffiti sprays). Additional levels earned in the same week do not give additional care packages.</p>
-          </div>
-        </details>
+          <details class="faq-item">
+            <summary>
+              <span>What is the fastest way to earn XP?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-body">
+              <p><strong>Rush (3v3)</strong> has the highest average rate at about 43.7 XP/min, and short 4-round-lead wins can reach roughly 69 XP/min. For solo play, <strong>Deathmatch</strong> is the most consistent at about 40 XP/min. Premier pays the largest single match, up to 1,560 XP on a win at 4×, but takes about 32 minutes.</p>
+            </div>
+          </details>
 
-        <details class="faq-card">
-          <summary class="faq-summary">
-            <span>Do bonus XP and XP Overload affect Service Medal progress?</span>
-            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </summary>
-          <div class="faq-body">
-            <p>Yes. All XP earned—including weekly bonus XP—counts 1:1 toward your 5,000 XP level requirements and your 40-level Service Medal progress. Likewise, playing while under Reduced XP will dramatically slow down your progress toward your Service Medal, so it is most efficient to grind primarily during Tier 1 and Tier 2 bonus windows.</p>
-          </div>
-        </details>
+          <details class="faq-item">
+            <summary>
+              <span>When does the weekly reset happen?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-body">
+              <p>Every <strong>Wednesday at 01:00 UTC</strong>. In North America that is Tuesday evening: 6:00 PM PDT or 9:00 PM EDT, depending on daylight saving. In Europe it is early Wednesday: 2:00 AM CET or 3:00 AM CEST. In Asia it is Wednesday 9:00 AM CST / 10:00 AM JST.</p>
+              <p>The reset restores the bonus pool and makes you eligible for a new care package.</p>
+            </div>
+          </details>
 
-      </div>
-    </section>
+          <details class="faq-item">
+            <summary>
+              <span>What is Reduced XP, and how do you clear it?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-body">
+              <p><strong>Reduced XP</strong> starts after you earn more than <strong>11,166 XP</strong> in one reset week, and comes with the in-game XP Overload badge. Base XP is multiplied by <code>0.175</code>, an 82.5% cut.</p>
+              <p>You cannot remove it manually. It clears on the next weekly reset at Wednesday 01:00 UTC.</p>
+            </div>
+          </details>
 
-    <!-- 9. FOOTER -->
-    <footer class="tactical-footer">
+          <details class="faq-item">
+            <summary>
+              <span>How much XP is the weekly drop?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-body">
+              <p><strong>5,000 XP</strong>, exactly one profile rank. Your first level-up each week awards the care package; you choose 2 of 4 items. Further levels that week do not award another package.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>
+              <span>Do bonus XP and XP Overload count toward service medals?</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-body">
+              <p>Yes. All XP counts 1:1 toward profile levels and the 200,000 XP service medal. Reduced XP also slows medal progress, so the cheapest route is to play inside the 4× and 2× windows and stop when the pool runs out.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
       <div>
-        Counter-Strike 2 XP Benchmarks &middot; Built for CS2 Players &middot; 
-        <a href="https://github.com/naczo5/cs2-xp-calculator" target="_blank" rel="noopener noreferrer" style="color:var(--amber-bright);text-decoration:none">GitHub Repository</a>
+        <span class="footer-mark">CS2 <span class="wordmark-xp">XP</span></span>
+        <p>An independent CS2 XP calculator. Not affiliated with Valve.</p>
       </div>
-      <div>Formulas verified against in-game CS2 match results &middot; Updated for 2026</div>
-    </footer>
+      <div class="footer-meta">
+        <p>Formulas checked against in-game matches. Updated for 2026.</p>
+        <p><a href="https://github.com/naczo5/cs2-xp-calculator" target="_blank" rel="noopener noreferrer">Source on GitHub</a></p>
+      </div>
+    </div>
+  </footer>
 
+  <div class="toast" id="tactical-toast" role="status" aria-live="polite">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span id="toast-message">Link copied</span>
   </div>
 
-  <!-- Tactical Toast Notification -->
-  <div class="tactical-toast" id="tactical-toast" role="status" aria-live="polite">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-    <span id="toast-message">Link copied to clipboard!</span>
-  </div>
+  <noscript>
+    <p class="noscript-note">The rankings and calculator need JavaScript. The formulas and guide below work without it.</p>
+  </noscript>
 
   <script src="data.js"></script>
   <script src="app.js"></script>

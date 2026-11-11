@@ -1,4 +1,4 @@
-// CS2 XP Calculator & Mode Benchmarks Logic
+// CS2 XP Calculator & Mode Benchmarks
 (function () {
   "use strict";
 
@@ -8,7 +8,11 @@
     return;
   }
 
-  // App State - Default to Tier 1 (Max Weekly Bonus: 4.0x)
+  const LEVEL_XP = 5000;
+  const number = new Intl.NumberFormat("en-US");
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  // App state — default to the full weekly bonus (4×)
   const state = {
     currentTierId: "tier1",
     viewMode: "avg", // "avg" or "win"
@@ -41,7 +45,7 @@
     const dur = Math.max(duration, 0.1);
     const xpPerMin = +(total / dur).toFixed(2);
     const xpPerHour = +((total / dur) * 60).toFixed(1);
-    const minutesTo5k = total > 0 ? Math.round(5000 / (total / dur)) : 0;
+    const minutesTo5k = total > 0 ? Math.round(LEVEL_XP / (total / dur)) : 0;
     const hoursTo5k = total > 0 ? +(minutesTo5k / 60).toFixed(1) : 0;
 
     return {
@@ -56,8 +60,35 @@
     };
   }
 
-  // DOM Elements
+  function formatHours(hours) {
+    if (hours >= 10) return `${Math.round(hours)} h`;
+    return `${hours.toFixed(1)} h`;
+  }
+
+  function formatRate(rate) {
+    return rate.toFixed(1);
+  }
+
+  function durationLabel(minutes) {
+    return Number.isInteger(minutes) ? String(minutes) : minutes.toFixed(1);
+  }
+
+  function updateSliderFill(el) {
+    const min = parseFloat(el.min) || 0;
+    const max = parseFloat(el.max) || 100;
+    const value = parseFloat(el.value) || 0;
+    const pct = max > min ? ((value - min) / (max - min)) * 100 : 0;
+    el.style.setProperty("--fill", `${pct}%`);
+  }
+
+  // DOM elements
   const tierSwitchGroup = document.getElementById("tier-switch-group");
+  const tierBarNote = document.getElementById("tier-bar-note");
+  const heroAnswerMode = document.getElementById("hero-answer-mode");
+  const heroAnswerRate = document.getElementById("hero-answer-rate");
+  const heroAnswerView = document.getElementById("hero-answer-view");
+  const heroAnswerNote = document.getElementById("hero-answer-note");
+
   const btnViewAvg = document.getElementById("btn-view-avg");
   const btnViewWin = document.getElementById("btn-view-win");
   const benchmarkStack = document.getElementById("benchmark-stack");
@@ -83,95 +114,118 @@
   const readoutMatchesNeeded = document.getElementById("readout-matches-needed");
   const readoutTimeNeeded = document.getElementById("readout-time-needed");
   const readoutTime1k = document.getElementById("readout-time-1k");
+  const readoutDropFill = document.getElementById("readout-drop-fill");
+  const readoutDropCaption = document.getElementById("readout-drop-caption");
 
-  // Render Global Tier Multiplier Switcher
   function renderTierSwitchers() {
     tierSwitchGroup.innerHTML = "";
+
     DATA.tiers.forEach(tier => {
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = `tactile-tab ${tier.id === state.currentTierId ? "active" : ""}`;
-      btn.innerHTML = `${tier.name} (${tier.multiplier}x)`;
-      btn.title = tier.description;
+      btn.className = "tier-tab";
+      btn.dataset.tierId = tier.id;
+      btn.title = `${tier.description} ${tier.tag}.`;
+      btn.setAttribute("aria-pressed", String(tier.id === state.currentTierId));
+      btn.innerHTML = `
+        <span class="tier-tab-name">${tier.name}</span>
+        <span class="tier-tab-mult">${tier.multiplier}×</span>
+      `;
+
+      if (tier.id === state.currentTierId) btn.classList.add("active");
+
       btn.addEventListener("click", () => {
+        if (state.currentTierId === tier.id) return;
         state.currentTierId = tier.id;
-        renderTierSwitchers();
-        updateBenchmarkList();
-        updateCalculator();
+        setTierButtons();
+        updateAll();
       });
+
       tierSwitchGroup.appendChild(btn);
     });
   }
 
-  // Render Master Mode Benchmark List
-  function updateBenchmarkList() {
-    const currentTier = getTier(state.currentTierId);
-    const isWin = state.viewMode === "win";
+  function setTierButtons() {
+    tierSwitchGroup.querySelectorAll(".tier-tab").forEach(btn => {
+      const active = btn.dataset.tierId === state.currentTierId;
+      btn.classList.toggle("active", active);
+      btn.setAttribute("aria-pressed", String(active));
+    });
+  }
 
+  function buildRows(tier, isWin) {
     const rows = DATA.modes.map(mode => {
       const metric = isWin ? mode.winMetric : mode.avgMetric;
       const duration = isWin ? mode.winDuration : mode.avgDuration;
-      const calc = calculateModeXp(mode, metric, duration, currentTier);
+
       return {
         mode,
         metric,
         duration,
-        calc
+        calc: calculateModeXp(mode, metric, duration, tier)
       };
     });
 
-    // Sort descending by XP per minute
     rows.sort((a, b) => b.calc.xpPerMin - a.calc.xpPerMin);
+    return rows;
+  }
 
+  function updateHero(rows, tier) {
+    const top = rows[0];
+    if (!top) return;
+
+    const isWin = state.viewMode === "win";
+    heroAnswerMode.textContent = top.mode.name;
+    heroAnswerRate.textContent = `${formatRate(top.calc.xpPerMin)} XP/min`;
+    heroAnswerView.textContent = isWin ? "a winning match" : "a typical match";
+    heroAnswerNote.textContent = `${tier.tag} at the ${tier.multiplier}× weekly bonus.`;
+  }
+
+  function renderRankRows(rows) {
+    const isWin = state.viewMode === "win";
     const maxRate = rows.length > 0 ? rows[0].calc.xpPerMin : 1;
-
     benchmarkStack.innerHTML = "";
+
     rows.forEach((item, index) => {
-      const row = document.createElement("div");
-      row.className = `telemetry-row-card ${index === 0 ? "rank-top" : ""}`;
+      const pct = maxRate > 0 ? Math.min(Math.round((item.calc.xpPerMin / maxRate) * 100), 100) : 0;
+      const isTop = index === 0;
 
-      const pct = Math.min(Math.round((item.calc.xpPerMin / maxRate) * 100), 100);
-      const metricUnitStr = item.mode.type === "round_based" ? "wins" : "pts";
-
+      const row = document.createElement("button");
+      row.type = "button";
+      row.className = `rank-row${isTop ? " rank-row-top" : ""}`;
+      row.style.setProperty("--i", String(index));
       row.innerHTML = `
-        <div class="t-rank-badge tabular-nums">#${index + 1}</div>
-        <div class="t-identity">
-          <span class="t-mode-title">${item.mode.name}</span>
-          <span class="t-formula-spec font-mono">${item.mode.formula}</span>
-        </div>
-        <div class="t-stat-cell">
-          <span class="t-stat-label">${isWin ? "WIN TIME" : "AVG TIME"}</span>
-          <span class="t-stat-value tabular-nums">${item.duration}m</span>
-        </div>
-        <div class="t-stat-cell">
-          <span class="t-stat-label">${isWin ? "WIN SCORE" : "AVG SCORE"}</span>
-          <span class="t-stat-value tabular-nums">${item.metric} ${metricUnitStr}</span>
-        </div>
-        <div class="t-stat-cell">
-          <span class="t-stat-label">MATCH XP</span>
-          <span class="t-stat-value tabular-nums" style="color:#fff">${item.calc.total} XP</span>
-        </div>
-        <div class="t-throughput-cell">
-          <span class="t-stat-label">THROUGHPUT</span>
-          <span class="t-rate-primary tabular-nums">${item.calc.xpPerMin} <span class="t-rate-unit">XP/m</span></span>
-          <span class="t-rate-hourly tabular-nums">${item.calc.xpPerHour.toLocaleString()} XP/h</span>
-        </div>
-        <div class="t-gauge-cell">
-          <div class="tactical-gauge-track">
-            <div class="tactical-gauge-fill" style="width: ${pct}%;"></div>
-          </div>
-          <div class="t-gauge-target tabular-nums">
-            ${item.calc.total > 0 ? `5,000 XP in <strong>~${item.calc.hoursTo5k}h</strong> (${item.calc.minutesTo5k}m)` : "No XP"}
-          </div>
-        </div>
+        <span class="rank-index">${String(index + 1).padStart(2, "0")}</span>
+        <span class="rank-main">
+          <span class="rank-title-row">
+            <span class="rank-name">${item.mode.name}</span>
+            <span class="rank-formula">
+              <span class="cat-dot ${item.mode.type === "round_based" ? "is-round" : "is-score"}" aria-hidden="true"></span>
+              ${item.mode.formula}
+            </span>
+          </span>
+          <span class="rank-bar" aria-hidden="true">
+            <span class="rank-bar-fill" style="--pct:${(pct / 100).toFixed(3)}"></span>
+          </span>
+          <span class="rank-meta">
+            <span>${isWin ? "Win" : "Typical"} ${durationLabel(item.duration)} min</span>
+            <span>${number.format(item.calc.total)} XP</span>
+            <span>5,000 XP in ~${formatHours(item.calc.hoursTo5k)}</span>
+          </span>
+        </span>
+        <span class="rank-rate">${formatRate(item.calc.xpPerMin)}<span class="rank-rate-unit">XP/min</span></span>
+        <span class="sr-only">Load into the calculator.</span>
       `;
 
-      row.title = "Click to load into Custom Calculator";
+      row.title = `Load ${item.mode.name} into the calculator`;
       row.addEventListener("click", () => {
         selectCalculatorMode(item.mode.id);
-        const calcSection = document.querySelector(".tactical-cockpit-panel");
+        const calcSection = document.getElementById("calculator");
         if (calcSection) {
-          calcSection.scrollIntoView({ behavior: "smooth", block: "center" });
+          calcSection.scrollIntoView({
+            behavior: prefersReducedMotion.matches ? "auto" : "smooth",
+            block: "start"
+          });
         }
       });
 
@@ -179,18 +233,31 @@
     });
   }
 
-  // Calculator Mode Switcher Strip
   function renderCalcModeStrip() {
     calcModeStrip.innerHTML = "";
+
     DATA.modes.forEach(mode => {
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = `cockpit-mode-btn ${mode.id === state.calcModeId ? "active" : ""}`;
+      btn.className = "mode-btn";
+      btn.dataset.modeId = mode.id;
       btn.textContent = mode.name;
+      btn.setAttribute("aria-pressed", String(mode.id === state.calcModeId));
+      if (mode.id === state.calcModeId) btn.classList.add("active");
+
       btn.addEventListener("click", () => {
         selectCalculatorMode(mode.id);
       });
+
       calcModeStrip.appendChild(btn);
+    });
+  }
+
+  function setActiveModeButton(modeId) {
+    calcModeStrip.querySelectorAll(".mode-btn").forEach(btn => {
+      const active = btn.dataset.modeId === modeId;
+      btn.classList.toggle("active", active);
+      btn.setAttribute("aria-pressed", String(active));
     });
   }
 
@@ -200,13 +267,15 @@
     state.calcMetric = mode.avgMetric;
     state.calcDuration = mode.avgDuration;
 
-    renderCalcModeStrip();
+    setActiveModeButton(modeId);
     setupCalculatorSliders(mode);
     updateCalculator();
   }
 
   function setupCalculatorSliders(mode) {
     calcMetricLabel.textContent = mode.metricLabel;
+    btnMetricDec.setAttribute("aria-label", `Decrease ${mode.metricLabel.toLowerCase()}`);
+    btnMetricInc.setAttribute("aria-label", `Increase ${mode.metricLabel.toLowerCase()}`);
     calcMetricSlider.min = mode.minMetric;
     calcMetricSlider.max = mode.maxMetric;
     calcMetricSlider.step = mode.metricStep;
@@ -217,41 +286,66 @@
     calcDurationSlider.step = 0.5;
     calcDurationSlider.value = state.calcDuration;
 
-    calcModeNotes.textContent = `Rule: ${mode.formula} • ${mode.winCondition} • ${mode.notes}`;
+    calcModeNotes.textContent = `${mode.formula}. ${mode.winCondition}. ${mode.notes}`;
+
+    updateSliderFill(calcMetricSlider);
+    updateSliderFill(calcDurationSlider);
   }
 
   function updateCalculator() {
-    const currentTier = getTier(state.currentTierId);
+    const tier = getTier(state.currentTierId);
     const mode = getMode(state.calcModeId);
+    const isReduced = tier.id === "tier4";
 
-    calcTierIndicator.innerHTML = `Active Tier: <strong>${currentTier.name} (${currentTier.multiplier}x)</strong>`;
+    calcTierIndicator.innerHTML = `<span class="console-tier-label">Tier</span> <strong>${tier.name} · ${tier.multiplier}×</strong>`;
     calcMetricLive.textContent = `${state.calcMetric} ${mode.unit}`;
     calcDurationLive.textContent = `${state.calcDuration} min`;
 
-    const calc = calculateModeXp(mode, state.calcMetric, state.calcDuration, currentTier);
+    const calc = calculateModeXp(mode, state.calcMetric, state.calcDuration, tier);
 
-    readoutTotalXp.textContent = `${calc.total} XP`;
-    if (currentTier.id === "tier4") {
-      readoutBreakdown.textContent = `Throttled (0.175x on ${calc.base} Base XP)`;
-    } else {
-      readoutBreakdown.textContent = `${calc.base} Base + ${calc.bonus} Bonus`;
-    }
+    readoutTotalXp.textContent = number.format(calc.total);
+    readoutBreakdown.textContent = isReduced
+      ? `${calc.base} base × 0.175 reduced`
+      : `${calc.base} base + ${calc.bonus} bonus`;
 
-    readoutRateMin.innerHTML = `${calc.xpPerMin} <span style="font-size:0.9rem;font-weight:600">XP/m</span>`;
-    readoutRateHour.textContent = `${calc.xpPerHour.toLocaleString()} XP / hour`;
+    readoutRateMin.textContent = formatRate(calc.xpPerMin);
+    readoutRateHour.textContent = `${number.format(Math.round(calc.xpPerHour))} XP per hour`;
 
-    const matches5k = calc.total > 0 ? Math.ceil(5000 / calc.total) : "—";
-    const totalMins = calc.total > 0 ? Math.round(matches5k * state.calcDuration) : 0;
-    const totalHours = calc.total > 0 ? +(totalMins / 60).toFixed(1) : 0;
+    const matches5k = calc.total > 0 ? Math.ceil(LEVEL_XP / calc.total) : null;
+    const totalMins = matches5k ? Math.round(matches5k * state.calcDuration) : 0;
+    const totalHours = totalMins > 0 ? +(totalMins / 60).toFixed(1) : 0;
 
-    readoutMatchesNeeded.innerHTML = `${matches5k} <span style="font-size:0.85rem;font-weight:600">matches</span>`;
-    readoutTimeNeeded.textContent = calc.total > 0 ? `~${totalHours} hours (${totalMins} min of play)` : "Zero XP earned";
+    readoutMatchesNeeded.textContent = matches5k ? number.format(matches5k) : "—";
+    readoutTimeNeeded.textContent = matches5k
+      ? `~${formatHours(totalHours)} of play`
+      : "No XP at this score";
 
-    const minPer1k = calc.xpPerMin > 0 ? (1000 / calc.xpPerMin).toFixed(1) : "—";
-    readoutTime1k.innerHTML = `${minPer1k} <span style="font-size:0.85rem;font-weight:600">min</span>`;
+    const minPer1k = calc.xpPerMin > 0 ? (1000 / calc.xpPerMin).toFixed(1) : null;
+    readoutTime1k.textContent = minPer1k || "—";
+
+    const dropPct = Math.min((calc.total / LEVEL_XP) * 100, 100);
+    readoutDropFill.style.width = `${dropPct}%`;
+    readoutDropCaption.textContent = calc.total >= LEVEL_XP
+      ? "Covers the full 5,000 XP weekly drop"
+      : `${Math.round(dropPct)}% of the 5,000 XP weekly drop`;
+
+    updateSliderFill(calcMetricSlider);
+    updateSliderFill(calcDurationSlider);
   }
 
-  // Stepper & Slider Listeners
+  function updateAll() {
+    const tier = getTier(state.currentTierId);
+    const isWin = state.viewMode === "win";
+    const rows = buildRows(tier, isWin);
+
+    updateHero(rows, tier);
+    renderRankRows(rows);
+    updateCalculator();
+
+    tierBarNote.textContent = tier.description;
+  }
+
+  // Stepper and slider listeners
   btnMetricDec.addEventListener("click", () => {
     const mode = getMode(state.calcModeId);
     state.calcMetric = Math.max(mode.minMetric, +(state.calcMetric - mode.metricStep).toFixed(1));
@@ -290,42 +384,56 @@
     updateCalculator();
   });
 
-  // Average vs Win Toggle
+  // Typical vs winning match
   btnViewAvg.addEventListener("click", () => {
+    if (state.viewMode === "avg") return;
     state.viewMode = "avg";
     btnViewAvg.classList.add("active");
+    btnViewAvg.setAttribute("aria-pressed", "true");
     btnViewWin.classList.remove("active");
-    updateBenchmarkList();
+    btnViewWin.setAttribute("aria-pressed", "false");
+    updateAll();
   });
 
   btnViewWin.addEventListener("click", () => {
+    if (state.viewMode === "win") return;
     state.viewMode = "win";
     btnViewWin.classList.add("active");
+    btnViewWin.setAttribute("aria-pressed", "true");
     btnViewAvg.classList.remove("active");
-    updateBenchmarkList();
+    btnViewAvg.setAttribute("aria-pressed", "false");
+    updateAll();
   });
 
-  // Weekly Reset Countdown & Hover Popup (Local & UTC Times)
+  // Weekly reset countdown and local/UTC popup
   function initWeeklyResetCountdown() {
     const timerEl = document.getElementById("reset-timer-val");
-    const chipEl = document.getElementById("chip-reset-countdown");
+    const wrapEl = document.getElementById("reset-status");
+    const triggerEl = document.getElementById("reset-trigger");
+    const popupEl = document.getElementById("reset-popup");
     const popupCountdown = document.getElementById("popup-reset-countdown");
     const popupLocalTime = document.getElementById("popup-local-time");
     const popupLocalTz = document.getElementById("popup-local-tz");
     const popupUtcTime = document.getElementById("popup-utc-time");
 
-    if (!timerEl) return;
+    if (!timerEl || !wrapEl || !triggerEl) return;
 
     let userTz = "";
     try {
       userTz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
     } catch (e) {}
 
+    function setOpen(open) {
+      wrapEl.classList.toggle("is-open", open);
+      triggerEl.setAttribute("aria-expanded", String(open));
+      if (popupEl) popupEl.setAttribute("aria-hidden", String(!open));
+    }
+
     function getNextResetDate() {
       const now = new Date();
       const day = now.getUTCDay();
-      let daysUntilWed = (3 - day + 7) % 7;
-      
+      const daysUntilWed = (3 - day + 7) % 7;
+
       const target = new Date(Date.UTC(
         now.getUTCFullYear(),
         now.getUTCMonth(),
@@ -344,7 +452,7 @@
       const diff = target.getTime() - now.getTime();
 
       if (diff <= 0) {
-        timerEl.textContent = "RESETTING NOW";
+        timerEl.textContent = "now";
         if (popupCountdown) popupCountdown.textContent = "Resetting now";
         return;
       }
@@ -354,15 +462,12 @@
       const m = Math.floor((diff / (1000 * 60)) % 60);
       const s = Math.floor((diff / 1000) % 60);
 
-      timerEl.textContent = `IN ${d}d ${h}h ${m}m ${s}s`;
-      if (popupCountdown) {
-        popupCountdown.textContent = `In ${d}d ${h}h ${m}m ${s}s`;
-      }
+      timerEl.textContent = `${d}d ${h}h ${m}m ${s}s`;
+      if (popupCountdown) popupCountdown.textContent = `${d}d ${h}h ${m}m ${s}s`;
 
-      // Format target in user's local time
       if (popupLocalTime) {
         try {
-          const localStr = target.toLocaleString(undefined, {
+          popupLocalTime.textContent = target.toLocaleString(undefined, {
             weekday: "short",
             month: "short",
             day: "numeric",
@@ -370,13 +475,11 @@
             minute: "2-digit",
             timeZoneName: "short"
           });
-          popupLocalTime.textContent = localStr;
         } catch (e) {
           popupLocalTime.textContent = target.toLocaleString();
         }
       }
 
-      // Timezone label with offset
       if (popupLocalTz) {
         try {
           const offsetMin = -target.getTimezoneOffset();
@@ -390,7 +493,6 @@
         }
       }
 
-      // Format target in UTC time
       if (popupUtcTime) {
         try {
           const utcStr = target.toLocaleString("en-US", {
@@ -409,38 +511,23 @@
       }
     }
 
-    // Toggle on mobile click / keyboard navigation
-    if (chipEl) {
-      chipEl.addEventListener("click", (e) => {
-        if (e.target.closest(".reset-hover-popup")) return;
-        const isOpen = chipEl.classList.toggle("is-open");
-        chipEl.setAttribute("aria-expanded", isOpen ? "true" : "false");
-      });
+    triggerEl.addEventListener("click", () => {
+      setOpen(!wrapEl.classList.contains("is-open"));
+    });
 
-      chipEl.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          const isOpen = chipEl.classList.toggle("is-open");
-          chipEl.setAttribute("aria-expanded", isOpen ? "true" : "false");
-        } else if (e.key === "Escape" && chipEl.classList.contains("is-open")) {
-          chipEl.classList.remove("is-open");
-          chipEl.setAttribute("aria-expanded", "false");
-        }
-      });
+    document.addEventListener("click", (e) => {
+      if (!wrapEl.contains(e.target)) setOpen(false);
+    });
 
-      document.addEventListener("click", (e) => {
-        if (!chipEl.contains(e.target)) {
-          chipEl.classList.remove("is-open");
-          chipEl.setAttribute("aria-expanded", "false");
-        }
-      });
-    }
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setOpen(false);
+    });
 
     update();
     setInterval(update, 1000);
   }
 
-  // Share Link Action
+  // Share link
   function initShareButton() {
     const shareBtn = document.getElementById("btn-share-page");
     const toast = document.getElementById("tactical-toast");
@@ -449,7 +536,7 @@
 
     let toastTimeout;
     shareBtn.addEventListener("click", async () => {
-      const shareUrl = window.location.href.split('#')[0];
+      const shareUrl = window.location.href.split("#")[0];
       try {
         if (navigator.clipboard && navigator.clipboard.writeText) {
           await navigator.clipboard.writeText(shareUrl);
@@ -461,28 +548,25 @@
           document.execCommand("copy");
           document.body.removeChild(input);
         }
-        if (toastMsg) toastMsg.textContent = "URL copied to clipboard!";
+        if (toastMsg) toastMsg.textContent = "Link copied to clipboard";
       } catch (err) {
-        if (toastMsg) toastMsg.textContent = "Share link: " + shareUrl;
+        if (toastMsg) toastMsg.textContent = shareUrl;
       }
 
       toast.classList.add("visible");
       clearTimeout(toastTimeout);
       toastTimeout = setTimeout(() => {
         toast.classList.remove("visible");
-      }, 3500);
+      }, 3000);
     });
   }
 
   // Initialize
   renderTierSwitchers();
-  updateBenchmarkList();
   renderCalcModeStrip();
   const initMode = getMode(state.calcModeId);
   setupCalculatorSliders(initMode);
-  updateCalculator();
+  updateAll();
   initWeeklyResetCountdown();
   initShareButton();
-
 })();
-

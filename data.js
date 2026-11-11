@@ -9,35 +9,35 @@ window.CS2_XP_DATA = {
   tiers: [
     {
       id: "tier1",
-      name: "Max Weekly Bonus",
+      name: "Full bonus",
       multiplier: 4.0,
       bonusMult: 3.0,
-      description: "Default weekly boost (+3x bonus on 1x base)",
-      tag: "First 4,500 XP"
+      description: "Full bonus, first 4,500 XP after the reset.",
+      tag: "0 – 4,500 XP"
     },
     {
       id: "tier2",
-      name: "Reduced Bonus",
+      name: "Half bonus",
       multiplier: 2.0,
       bonusMult: 1.0,
-      description: "Reduced weekly boost (+1x bonus on 1x base)",
-      tag: "4,500 to 7,500 XP"
+      description: "Half bonus, from 4,500 to 7,500 XP.",
+      tag: "4,500 – 7,500 XP"
     },
     {
       id: "tier3",
-      name: "Standard (No Bonus)",
+      name: "Base rate",
       multiplier: 1.0,
       bonusMult: 0.0,
-      description: "Base rate after bonus pool depleted",
-      tag: "7,500 to 11,166 XP"
+      description: "Base rate, from 7,500 to 11,166 XP.",
+      tag: "7,500 – 11,166 XP"
     },
     {
       id: "tier4",
-      name: "XP Overload",
+      name: "Reduced XP",
       multiplier: 0.175,
       bonusMult: 0.0,
-      description: "Throttled rate after 11,166 XP",
-      tag: ">11,166 XP"
+      description: "Reduced XP, after 11,166 XP until the reset.",
+      tag: "Above 11,166 XP"
     }
   ],
   modes: [
@@ -47,7 +47,7 @@ window.CS2_XP_DATA = {
       type: "score_based",
       formula: "Score × 0.2",
       unit: "score points",
-      metricLabel: "Score Points",
+      metricLabel: "Score points",
       minMetric: 100,
       maxMetric: 1000,
       metricStep: 25,
@@ -63,9 +63,9 @@ window.CS2_XP_DATA = {
       id: "premier",
       name: "Premier / Competitive",
       type: "round_based",
-      formula: "Rounds Won × 30",
+      formula: "Rounds won × 30",
       unit: "rounds won",
-      metricLabel: "Rounds Won",
+      metricLabel: "Rounds won",
       minMetric: 0,
       maxMetric: 16,
       metricStep: 0.5,
@@ -81,9 +81,9 @@ window.CS2_XP_DATA = {
       id: "wingman",
       name: "Wingman (2v2)",
       type: "round_based",
-      formula: "Rounds Won × 15",
+      formula: "Rounds won × 15",
       unit: "rounds won",
-      metricLabel: "Rounds Won",
+      metricLabel: "Rounds won",
       minMetric: 0,
       maxMetric: 9,
       metricStep: 0.5,
@@ -99,9 +99,9 @@ window.CS2_XP_DATA = {
       id: "rush",
       name: "Rush (3v3)",
       type: "round_based",
-      formula: "Rounds Won × 15",
+      formula: "Rounds won × 15",
       unit: "rounds won",
-      metricLabel: "Rounds Won",
+      metricLabel: "Rounds won",
       minMetric: 0,
       maxMetric: 8,
       metricStep: 0.5,
@@ -110,7 +110,7 @@ window.CS2_XP_DATA = {
       avgMetric: 5.5,    // Average rounds won at 50% winrate
       winMetric: 6.0,    // Fast 4-round lead win (6-2 in ~5.2 min)
       winDuration: 5.22,
-      winCondition: "4-round lead OR first to 8 wins",
+      winCondition: "First to a 4-round lead or 8 round wins",
       notes: "Fastest round-based burst. Instant win on 4-round lead (e.g. 6-2 in ~5 min)."
     },
     {
@@ -119,7 +119,7 @@ window.CS2_XP_DATA = {
       type: "score_based",
       formula: "Score × 4.0",
       unit: "score points",
-      metricLabel: "Score Points",
+      metricLabel: "Score points",
       minMetric: 5,
       maxMetric: 100,
       metricStep: 5,
@@ -137,7 +137,7 @@ window.CS2_XP_DATA = {
       type: "score_based",
       formula: "Score × 2.0",
       unit: "score points",
-      metricLabel: "Score Points",
+      metricLabel: "Score points",
       minMetric: 5,
       maxMetric: 60,
       metricStep: 5,
@@ -155,7 +155,7 @@ window.CS2_XP_DATA = {
       type: "score_based",
       formula: "Score × 1.0",
       unit: "weapon score",
-      metricLabel: "Weapon Score",
+      metricLabel: "Weapon score",
       minMetric: 10,
       maxMetric: 80,
       metricStep: 5,
